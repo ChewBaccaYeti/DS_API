@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Concordance Extraction Corporation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script src='https://cdn.jsdelivr.net/npm/json-formatter-js@latest/dist/json-formatter.umd.js'></script>
+
+    <div class='btn-container'>
+        <button class='toggle-btn'>Toggle Raw Data</button>
+    </div>
+    
+    <div class='raw_res' id='rawRes'>
+        <span id='demo'></span>
+        <div id='json'></div>
+    </div>
+    
+    <div class='crew'>
+        <div>
+            <h1><strong>Miners ⚒</strong></h1>
+            <div id='miners'></div>
+        </div>
+        <div>
+            <h1><strong>Engineers ⚙️</strong></h1>
+            <div id='engineers'></div>
+        </div>
+        <div>
+            <h1><strong>Scientists 🔬</strong></h1>
+            <div id='scientists'></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.querySelector('.toggle-btn');
+            toggleButton.addEventListener('click', toggleSidebar);
+            
+            function toggleSidebar() {
+                const rawRes = document.getElementById('rawRes');
+                rawRes.classList.toggle('open');
+            }
+
+            function renderCertifications(certifications) {
+                return certifications.map(cert => `
+                    <li>
+                        <strong>${cert.title}</strong> (Obtained on: ${new Date(cert.dateObtained).toLocaleDateString()})
+                    </li>
+                `).join('');
+            }
+
+            function renderEquipment(equipment) {
+                return equipment.map(eq => `
+                    <li>
+                        <strong>${eq.name}</strong> (${eq.type}, Acquired on: ${new Date(eq.acquired).toLocaleDateString()})
+                    </li>
+                `).join('');
+            }
+
+            function fetchMiners(miners) {
+                const demoElement = document.getElementById('demo');
+                demoElement.textContent = JSON.stringify(miners, null, 2);
+
+                const jsonContainer = document.getElementById('json');
+                const formatter = new JSONFormatter(miners, 2);
+                jsonContainer.appendChild(formatter.render());
+
+                const minersDiv = document.getElementById('miners');
+                minersDiv.innerHTML = '';
+                if (miners && Array.isArray(miners)) {
+                    miners.forEach(miner => {
+                        const minerDiv = document.createElement('div');
+                        minerDiv.classList.add('miner');
+                        minerDiv.innerHTML = `
+                            <h2>${miner.name}</h2>
+                            <p><strong>Role:</strong> ${miner.role.name} (${miner.role.symbol})</p>
+                            <p><strong>Species:</strong> ${miner.species}</p>
+                            <p><strong>Citizenship:</strong> ${miner.citizenship}</p>
+                            <p><strong>Rank:</strong> ${miner.rank}</p>
+                            <p><strong>Directive:</strong> ${miner.directive}</p>
+                            <p><strong>Experience:</strong> ${miner.experience.years} years</p>
+                            <p><strong>Skills:</strong> ${miner.experience.skills.join(', ')}</p>
+                            <p><strong>Certifications:</strong></p>
+                            <ul>${renderCertifications(miner.certifications)}</ul>
+                            <p><strong>Equipment:</strong></p>
+                            <ul>${renderEquipment(miner.equipment)}</ul>
+                        `;
+                        minersDiv.appendChild(minerDiv); 
+                    });
+                }
+                console.log('Miners data:', miners);
+            }
+
+            function fetchEngineers(engineers) {
+                const demoElement = document.getElementById('demo');
+                demoElement.textContent = JSON.stringify(engineers, null, 2);
+
+                const jsonContainer = document.getElementById('json');
+                const formatter = new JSONFormatter(engineers, 2);
+                jsonContainer.appendChild(formatter.render());
+
+                const engineersDiv = document.getElementById('engineers');
+                engineersDiv.innerHTML = '';
+                if (engineers && Array.isArray(engineers)) {
+                    engineers.forEach(engineer => {
+                        const engineerDiv = document.createElement('div');
+                        engineerDiv.classList.add('engineer');
+                        engineerDiv.innerHTML = `
+                            <h2>${engineer.name}</h2>
+                            <p><strong>Role:</strong> ${engineer.role.name} (${engineer.role.symbol})</p>
+                            <p><strong>Species:</strong> ${engineer.species}</p>
+                            <p><strong>Citizenship:</strong> ${engineer.citizenship}</p>
+                            <p><strong>Rank:</strong> ${engineer.rank}</p>
+                            <p><strong>Directive:</strong> ${engineer.directive}</p>
+                            <p><strong>Experience:</strong> ${engineer.experience.years} years</p>
+                            <p><strong>Skills:</strong> ${engineer.experience.skills.join(', ')}</p>
+                            <p><strong>Certifications:</strong></p>
+                            <ul>${renderCertifications(engineer.certifications)}</ul>
+                            <p><strong>Equipment:</strong></p>
+                            <ul>${renderEquipment(engineer.equipment)}</ul>
+                        `;
+                        engineersDiv.appendChild(engineerDiv);
+                    });
+                }
+                console.log('Engineers data:', engineers);
+            }
+
+            function fetchScientists(scientists) {
+                const demoElement = document.getElementById('demo');
+                demoElement.textContent = JSON.stringify(scientists, null, 2);
+
+                const jsonContainer = document.getElementById('json');
+                const formatter = new JSONFormatter(scientists, 2);
+                jsonContainer.appendChild(formatter.render());
+
+                const scientistsDiv = document.getElementById('scientists');
+                scientistsDiv.innerHTML = '';
+                if (scientists && Array.isArray(scientists)) {
+                    scientists.forEach(scientist => {
+                        const scientistDiv = document.createElement('div');
+                        scientistDiv.classList.add('scientist');
+                        scientistDiv.innerHTML = `
+                            <h2>${scientist.name}</h2>
+                            <p><strong>Role:</strong> ${scientist.role.name} (${scientist.role.symbol})</p>
+                            <p><strong>Species:</strong> ${scientist.species}</p>
+                            <p><strong>Citizenship:</strong> ${scientist.citizenship}</p>
+                            <p><strong>Rank:</strong> ${scientist.rank}</p>
+                            <p><strong>Directive:</strong> ${scientist.directive}</p>
+                            <p><strong>Experience:</strong> ${scientist.experience.years} years</p>
+                            <p><strong>Skills:</strong> ${scientist.experience.skills.join(', ')}</p>
+                            <p><strong>Certifications:</strong></p>
+                            <ul>${renderCertifications(scientist.certifications)}</ul>
+                            <p><strong>Equipment:</strong></p>
+                            <ul>${renderEquipment(scientist.equipment)}</ul>
+                        `;
+                        scientistsDiv.appendChild(scientistDiv);
+                    });
+                }
+                console.log('Scientists data:', scientists);
+            }
+
+            fetch('http://localhost:3842/miners')
+                .then(res => res.json())
+                .then(miners => fetchMiners(miners))
+                .catch(err => console.log(err));
+
+            fetch('http://localhost:3842/engineers')
+                .then(res => res.json())
+                .then(engineers => fetchEngineers(engineers))
+                .catch(err => console.log(err));
+
+            fetch('http://localhost:3842/scientists')
+                .then(res => res.json())
+                .then(scientists => fetchScientists(scientists))
+                .catch(err => console.log(err));
+        });
+    </script>
+</body>
+</html>

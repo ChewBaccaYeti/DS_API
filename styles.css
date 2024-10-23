@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    background-color: black;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.raw_res {
+    position: fixed;
+    top: 0;
+    left: -600px;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.5s ease;
+    overflow-y: auto;
+
+    width: 500px;
+    height: 100%;
+    margin: 20px;
+    padding: 20px;
+
+    background-color: #f0f0f0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.raw_res.open {
+    left: 0;
+}
+
+.crew {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    color: #f0f0f0;
+    background-color: black;
+}
+
+.miner, .engineer, .scientist {
+    margin: 16px 0px;
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow: 10px 5px 5px 0px gainsboro;
+    -webkit-box-shadow: 10px 5px 5px 0px gainsboro;
+    -moz-box-shadow: 10px 5px 5px 0px gainsboro;
+    color: black;
+    background-color: #f0f0f0;
+}
+
+.miner {
+    border: 6px solid red;
+}
+
+.engineer {
+    border: 6px solid blue;
+}
+
+.scientist {
+    border: 6px solid green;
+}
+
+h1, h2 {
+    margin: 0;
+}
