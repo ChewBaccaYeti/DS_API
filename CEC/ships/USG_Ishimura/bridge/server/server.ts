@@ -4,9 +4,9 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 
-import { getMiners } from './crew/controllers/miner.controller';
-import { getEngineers } from './crew/controllers/engineer.controller';
-import { getScientists } from './crew/controllers/scientist.controller';
+import { getMiners } from '../../crew/controllers/miner.controller';
+import { getEngineers } from '../../crew/controllers/engineer.controller';
+import { getScientists } from '../../crew/controllers/scientist.controller';
 
 const app = express();
 const username = process.env.MONGO_AEGIS_ADMIN;

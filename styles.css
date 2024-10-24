@@ -10,12 +10,17 @@ body {
 .btn-container {
     display: flex;
     flex-direction: column;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
 }
 
 .toggle-btn {
     position: fixed;
-    top: 20px;
-    left: 20px;
+    top: -960px;
+    left: 800px;
     z-index: 1001;
     padding: 10px 20px;
     background-color: #007BFF;
@@ -25,10 +30,14 @@ body {
     border-radius: 4px;
 }
 
+.toggle-btn:hover {
+    background-color: #007bffc1;
+}
+
 .raw_res {
     position: fixed;
     top: 0;
-    left: -600px;
+    left: -650px;
     z-index: 1000;
 
     display: flex;

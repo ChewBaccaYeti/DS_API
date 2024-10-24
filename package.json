@@ -5,7 +5,7 @@
   "main": "IshimuraDB.js",
   "scripts": {
     "RIG": "nodemon CEC/ships/USG_Ishimura/IshimuraDB.js",
-    "ER": "nodemon CEC/archive/ships/USG_Ishimura/bridgeServer.js",
+    "ER": "nodemon CEC/archive/ships/USG_Ishimura/bridge/server/server.js",
     "test": "jest"
   },
   "repository": {
