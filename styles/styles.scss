@@ -1,0 +1,98 @@
+$color-primary: #007bff;
+$color-secondary: #f0f0f0;
+$color-hover: rgba($color-primary, 0.76);
+$color-bg-dark: black;
+$color-border-miner: red;
+$color-border-engineer: blue;
+$color-border-scientist: green;
+$box-shadow: 10px 5px 5px 0px gainsboro;
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    transform: rotate(-90deg);
+}
+
+.toggle-btn {
+    position: fixed;
+    top: -960px;
+    left: 800px;
+    z-index: 1001;
+    padding: 10px 20px;
+    background-color: $color-primary;
+    color: $color-secondary;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+        background-color: $color-hover;
+    }
+}
+
+.raw-res {
+    position: fixed;
+    top: 0;
+    left: -750px;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.5s ease;
+    overflow-y: auto;
+
+    width: 700px;
+    height: 100%;
+    margin: 30px;
+    padding: 25px;
+
+    background-color: $color-secondary;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+
+    &.open {
+        left: 10px;
+    }
+}
+
+.crew {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: $color-secondary;
+    background-color: $color-bg-dark;
+
+    div > h1 {
+        margin: 8px;
+        padding-left: 50px;
+        width: fit-content;
+        color: $color-secondary;
+        font-weight: bold;
+    }
+}
+
+.miner,
+.engineer,
+.scientist {
+    margin: 20px 38px;
+    padding: 14px;
+    border-radius: 6px;
+    box-shadow: $box-shadow;
+    color: black;
+    background-color: $color-secondary;
+
+    &.miner {
+        border: 6px solid $color-border-miner;
+    }
+
+    &.engineer {
+        border: 6px solid $color-border-engineer;
+    }
+
+    &.scientist {
+        border: 6px solid $color-border-scientist;
+    }
+}

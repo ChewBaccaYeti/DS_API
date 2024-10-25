@@ -32,7 +32,8 @@
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.1",
     "morgan": "^1.10.0",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "sass": "^1.80.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
