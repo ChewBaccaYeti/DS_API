@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "CEC_AEGIS_ISHIMURA",
   "main": "IshimuraDB.js",
+  "private": true,
   "scripts": {
     "RIG": "nodemon CEC/ships/USG_Ishimura/IshimuraDB.js",
     "ER": "nodemon CEC/archive/ships/USG_Ishimura/bridge/server/server.js",
@@ -23,6 +24,24 @@
     "url": "https://github.com/ChewBaccaYeti/DS_API/issues"
   },
   "homepage": "https://github.com/ChewBaccaYeti/DS_API#readme",
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -32,7 +51,8 @@
     "morgan": "^1.10.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.27.0"
+    "react-router-dom": "^6.27.0",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
@@ -44,6 +64,9 @@
     "@types/dotenv": "^8.2.0",
     "@types/express": "^5.0.0",
     "@types/node": "^22.8.2",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
