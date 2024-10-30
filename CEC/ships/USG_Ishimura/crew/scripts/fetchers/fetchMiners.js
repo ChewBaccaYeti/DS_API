@@ -37,4 +37,4 @@ export default function fetchMiners() {
             console.log('Miners data:', miners);
         })
         .catch(err => console.log(err));
-}
+};

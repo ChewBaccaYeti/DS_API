@@ -37,4 +37,4 @@ export default function fetchScientists() {
             console.log('Scientist data:', scientists);
         })
         .catch(err => console.log(err));
-}
+};
