@@ -1,7 +1,5 @@
 import React from 'react';
-import Hub from '../Hub';
-import '../styles/styles.css';
-import '../styles/global.styles.css';
+import Hub from '../Hub.tsx';
 
 function App() {
   return (

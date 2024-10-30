@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import renderMiners from './scripts/helpers/renderMiners';
+import DOMPurify from 'dompurify';
+import renderMiners from '../scripts/helpers/renderMiners.js';
 import {
     renderCertifications,
     renderEquipment,
-} from './scripts/helpers/cert_eq.js';
+} from '../scripts/helpers/cert_eq.js';
 
 function Miners() {
     const [miners, setMiners] = useState([]);
@@ -14,11 +15,11 @@ function Miners() {
 
     return (
         <div id="miners">
-            <h2>Miners ⚒</h2>
+            <h2>Welcome to Mining Deck ⚒</h2>
             {miners.length > 0 ? (
                 miners.map(miner => (
                     <div key={miner.id} className="miner">
-                        <h2>{miner.name}</h2>
+                        <h3>{miner.name}</h3>
                         <ul>
                             <li>
                                 <p>
@@ -61,20 +62,21 @@ function Miners() {
                                 </p>
                             </li>
                         </ul>
-                        <p>
-                            <strong>Certifications:</strong>
-                        </p>
-                        <ul>
-                            <li>
-                                {renderCertifications(miner.certifications)}
-                            </li>
-                        </ul>
-                        <p>
-                            <strong>Equipment:</strong>
-                        </p>
-                        <ul>
-                            <li>{renderEquipment(miner.equipment)}</li>
-                        </ul>
+                        <ul
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(
+                                    renderCertifications(miner.certifications),
+                                ),
+                            }}
+                        />
+                        <h4>Equipment:</h4>
+                        <ul
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(
+                                    renderEquipment(miner.equipment),
+                                ),
+                            }}
+                        />
                     </div>
                 ))
             ) : (

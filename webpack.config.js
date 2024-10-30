@@ -12,7 +12,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
@@ -22,8 +22,8 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                test: /\.(css|scss)$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
                 test: /\.s[ac]ss$/i,
@@ -45,6 +45,6 @@ module.exports = {
         open: true
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.css', '.scss']
+        extensions: ['.js', '.jsx', 'ts', 'tsx', '.css', '.scss']
     }
 };
