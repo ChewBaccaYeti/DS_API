@@ -16,7 +16,7 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
 .toggle-btn {
     position: fixed;
     top: -955px;
-    left: 600px;
+    left: 560px;
     z-index: 1001;
     padding: 10px 20px;
     background-color: $color-primary;
@@ -74,25 +74,82 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
     }
 }
 
-.miner,
-.engineer,
-.scientist {
-    margin: 20px 38px;
-    padding: 14px;
-    border-radius: 6px;
-    box-shadow: $box-shadow;
-    color: black;
-    background-color: $color-secondary;
+#hub {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    &.miner {
-        border: 6px solid $color-border-miner;
+    h1 {
+        text-align: center;
     }
 
-    &.engineer {
-        border: 6px solid $color-border-engineer;
+    .navigation {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin: 15px 0;
     }
+}
 
-    &.scientist {
-        border: 6px solid $color-border-scientist;
+#miners {
+    padding: 20px;
+
+    .miners-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+
+        .miner {
+            margin: 20px 10px;
+            padding: 14px;
+            border-radius: 6px;
+            box-shadow: $box-shadow;
+            color: black;
+            background-color: $color-secondary;
+            border: 6px solid $color-border-miner;
+        }
+    }
+}
+
+#engineers {
+    padding: 20px;
+
+    .engineers-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+
+        .engineer {
+            margin: 20px 10px;
+            padding: 14px;
+            border-radius: 6px;
+            box-shadow: $box-shadow;
+            color: black;
+            background-color: $color-secondary;
+            border: 6px solid $color-border-engineer;
+        }
+    }
+}
+
+#scientists {
+    padding: 20px;
+
+    .scientists-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+
+        .scientist {
+            margin: 20px 10px;
+            padding: 14px;
+            border-radius: 6px;
+            box-shadow: $box-shadow;
+            color: black;
+            background-color: $color-secondary;
+            border: 6px solid $color-border-scientist;
+        }
     }
 }

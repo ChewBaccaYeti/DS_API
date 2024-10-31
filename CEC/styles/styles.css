@@ -7,7 +7,7 @@
 .toggle-btn {
   position: fixed;
   top: -955px;
-  left: 600px;
+  left: 560px;
   z-index: 1001;
   padding: 10px 20px;
   background-color: #007bff;
@@ -59,29 +59,75 @@
   font-weight: bold;
 }
 
-.miner,
-.engineer,
-.scientist {
-  margin: 20px 38px;
+#hub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#hub h1 {
+  text-align: center;
+}
+#hub .navigation {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+#miners {
+  padding: 20px;
+}
+#miners .miners-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+#miners .miners-grid .miner {
+  margin: 20px 10px;
   padding: 14px;
   border-radius: 6px;
   box-shadow: 10px 5px 5px 0px gainsboro;
   color: black;
   background-color: #f0f0f0;
-}
-.miner.miner,
-.engineer.miner,
-.scientist.miner {
   border: 6px solid red;
 }
-.miner.engineer,
-.engineer.engineer,
-.scientist.engineer {
+
+#engineers {
+  padding: 20px;
+}
+#engineers .engineers-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+#engineers .engineers-grid .engineer {
+  margin: 20px 10px;
+  padding: 14px;
+  border-radius: 6px;
+  box-shadow: 10px 5px 5px 0px gainsboro;
+  color: black;
+  background-color: #f0f0f0;
   border: 6px solid blue;
 }
-.miner.scientist,
-.engineer.scientist,
-.scientist.scientist {
+
+#scientists {
+  padding: 20px;
+}
+#scientists .scientists-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+#scientists .scientists-grid .scientist {
+  margin: 20px 10px;
+  padding: 14px;
+  border-radius: 6px;
+  box-shadow: 10px 5px 5px 0px gainsboro;
+  color: black;
+  background-color: #f0f0f0;
   border: 6px solid green;
 }
 

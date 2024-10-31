@@ -7,9 +7,9 @@ import Scientists from './ships/USG_Ishimura/crew/components/Scientists';
 const Hub: React.FC = () => {
     return (
         <Router>
-            <div>
+            <div id='hub'>
                 <h1>Concordance Extraction Corporation</h1>
-                <nav>
+                <nav className='navigation'>
                     <Link to="/miners">Miners ⚒</Link>
                     <Link to="/engineers">Engineers ⚙️</Link>
                     <Link to="/scientists">Scientists 🔬</Link>

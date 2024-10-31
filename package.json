@@ -8,7 +8,7 @@
     "RIG": "nodemon CEC/archive/ships/USG_Ishimura/IshimuraDB.js",
     "ER": "nodemon CEC/archive/ships/USG_Ishimura/bridge/server/server.js",
     "test": "jest",
-    "client": "webpack serve --config webpack.config.js --mode development",
+    "crew": "webpack serve --config webpack.config.js --mode development",
     "build": "webpack --config webpack.config.js --mode production",
     "start": "npm-run-all --parallel ER client"
   },
