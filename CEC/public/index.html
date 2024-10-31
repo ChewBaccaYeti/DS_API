@@ -14,13 +14,18 @@
         />
         <link rel="stylesheet" href="../styles/styles.css" />
         <link rel="stylesheet" href="../styles/global.styles.css" />
-        <title>Concordance Extraction Corporation</title>
+        <title>CEC</title>
     </head>
     <body>
-        <script src="https://cdn.jsdelivr.net/npm/json-formatter-js@latest/dist/json-formatter.umd.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/json-formatter-js@latest/dist/json-formatter.umd.js"
+        ></script>
+
+        <script defer type="module" src="../override.js"></script>
 
         <div class="btn-container">
-            <button class="toggle-btn">Toggle Raw Data</button>
+            <button class="toggle-btn">Raw Data</button>
         </div>
 
         <div class="raw-res" id="rawRes">
@@ -29,40 +34,11 @@
         </div>
 
         <div class="crew">
-            <div>
-                <h1><strong>Miners ⚒</strong></h1>
-                <div id="miners"></div>
-            </div>
-            <div>
-                <h1><strong>Engineers ⚙️</strong></h1>
-                <div id="engineers"></div>
-            </div>
-            <div>
-                <h1><strong>Scientists 🔬</strong></h1>
-                <div id="scientists"></div>
-            </div>
+            <div id="miners"></div>
+            <div id="engineers"></div>
+            <div id="scientists"></div>
         </div>
 
         <div id="root"></div>
-
-        <script type="module">
-            import fetchMiners from '../ships/USG_Ishimura/crew/scripts/fetchers/fetchMiners.js';
-            import fetchEngineers from '../ships/USG_Ishimura/crew/scripts/fetchers/fetchEngineers.js';
-            import fetchScientists from '../ships/USG_Ishimura/crew/scripts/fetchers/fetchScientists.js';
-
-            document.addEventListener('DOMContentLoaded', () => {
-                const toggleButton = document.querySelector('.toggle-btn');
-                toggleButton.addEventListener('click', toggleSidebar);
-
-                function toggleSidebar() {
-                    const rawRes = document.getElementById('rawRes');
-                    rawRes.classList.toggle('open');
-                }
-
-                fetchMiners();
-                fetchEngineers();
-                fetchScientists();
-            });
-        </script>
     </body>
 </html>

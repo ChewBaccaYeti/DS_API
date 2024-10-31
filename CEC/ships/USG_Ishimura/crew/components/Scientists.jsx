@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
-import renderScientists from '../scripts/helpers/renderScientists.js';
+import fetchScientists from '../scripts/fetchers/fetchScientists.js';
 import {
     renderCertifications,
     renderEquipment,
@@ -10,7 +10,7 @@ function Scientists() {
     const [scientists, setScientists] = useState([]);
 
     useEffect(() => {
-        renderScientists().then(data => setScientists(data));
+        fetchScientists().then(data => setScientists(data));
     }, []);
 
     return (

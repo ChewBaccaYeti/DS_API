@@ -56,28 +56,12 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
     }
 }
 
-.crew {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: $color-secondary;
-    background-color: $color-bg-dark;
-
-    div > h1 {
-        margin: 8px;
-        padding-left: 50px;
-        width: fit-content;
-        color: $color-secondary;
-        font-weight: bold;
-    }
-}
-
 #hub {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    .crew {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
     h1 {
         text-align: center;
@@ -89,67 +73,84 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
         justify-content: center;
         margin: 15px 0;
     }
-}
 
-#miners {
-    padding: 20px;
+    .routes {
+        #miners {
+            padding: 20px;
 
-    .miners-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 15px;
-        margin-top: 20px;
+            h2 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-        .miner {
-            margin: 20px 10px;
-            padding: 14px;
-            border-radius: 6px;
-            box-shadow: $box-shadow;
-            color: black;
-            background-color: $color-secondary;
-            border: 6px solid $color-border-miner;
+            .miners-grid {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 15px;
+                margin-top: 20px;
+
+                .miner {
+                    margin: 20px 10px;
+                    padding: 14px;
+                    border-radius: 6px;
+                    box-shadow: $box-shadow;
+                    color: black;
+                    background-color: $color-secondary;
+                    border: 6px solid $color-border-miner;
+                }
+            }
         }
-    }
-}
 
-#engineers {
-    padding: 20px;
+        #engineers {
+            padding: 20px;
 
-    .engineers-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 15px;
-        margin-top: 20px;
+            h2 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-        .engineer {
-            margin: 20px 10px;
-            padding: 14px;
-            border-radius: 6px;
-            box-shadow: $box-shadow;
-            color: black;
-            background-color: $color-secondary;
-            border: 6px solid $color-border-engineer;
+            .engineers-grid {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 15px;
+                margin-top: 20px;
+
+                .engineer {
+                    margin: 20px 10px;
+                    padding: 14px;
+                    border-radius: 6px;
+                    box-shadow: $box-shadow;
+                    color: black;
+                    background-color: $color-secondary;
+                    border: 6px solid $color-border-engineer;
+                }
+            }
         }
-    }
-}
 
-#scientists {
-    padding: 20px;
+        #scientists {
+            padding: 20px;
 
-    .scientists-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 15px;
-        margin-top: 20px;
+            h2 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-        .scientist {
-            margin: 20px 10px;
-            padding: 14px;
-            border-radius: 6px;
-            box-shadow: $box-shadow;
-            color: black;
-            background-color: $color-secondary;
-            border: 6px solid $color-border-scientist;
+            .scientists-grid {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 15px;
+                margin-top: 20px;
+
+                .scientist {
+                    margin: 20px 10px;
+                    padding: 14px;
+                    border-radius: 6px;
+                    box-shadow: $box-shadow;
+                    color: black;
+                    background-color: $color-secondary;
+                    border: 6px solid $color-border-scientist;
+                }
+            }
         }
     }
 }

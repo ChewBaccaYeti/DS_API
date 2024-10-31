@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
-import renderEngineers from '../scripts/helpers/renderEngineers.js';
+import fetchEngineers from '../scripts/fetchers/fetchEngineers.js';
 import {
     renderCertifications,
     renderEquipment,
@@ -10,7 +10,7 @@ function Engineers() {
     const [engineers, setEngineers] = useState([]);
 
     useEffect(() => {
-        renderEngineers().then(data => setEngineers(data));
+        fetchEngineers().then(data => setEngineers(data));
     }, []);
 
     return (

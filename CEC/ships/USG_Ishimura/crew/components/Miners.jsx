@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
-import renderMiners from '../scripts/helpers/renderMiners.js';
+import fetchMiners from '../scripts/fetchers/fetchMiners.js';
 import {
     renderCertifications,
     renderEquipment,
@@ -10,7 +10,7 @@ function Miners() {
     const [miners, setMiners] = useState([]);
 
     useEffect(() => {
-        renderMiners().then(data => setMiners(data));
+        fetchMiners().then(data => setMiners(data));
     }, []);
 
     return (
