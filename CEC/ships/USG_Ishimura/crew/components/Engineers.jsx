@@ -87,7 +87,7 @@ function Engineers() {
                         </div>
                     ))
                 ) : (
-                    <p>Loading Engineers ⚙️...</p>
+                    <p className="loading">Loading Engineers ⚙️...</p>
                 )}
             </div>
         </div>

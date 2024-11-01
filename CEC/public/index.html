@@ -12,7 +12,7 @@
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="../styles/styles.css" />
+        <link rel="stylesheet" href="../styles/index.css" />
         <link rel="stylesheet" href="../styles/global.styles.css" />
         <title>CEC</title>
     </head>
@@ -22,21 +22,35 @@
             src="https://cdn.jsdelivr.net/npm/json-formatter-js@latest/dist/json-formatter.umd.js"
         ></script>
 
-        <script defer type="module" src="../override.js"></script>
+        <script
+            defer
+            type="module"
+            src="../ships/USG_Ishimura/crew/scripts/helpers/override_index.js"
+        ></script>
 
-        <div class="btn-container">
-            <button class="toggle-btn">Raw Data</button>
-        </div>
-
-        <div class="raw-res" id="rawRes">
-            <span id="demo"></span>
-            <div id="json"></div>
+        <div>
+            <div class="btn-container">
+                <button class="toggle-btn">Raw Data</button>
+            </div>
+            <div class="raw-res" id="rawRes">
+                <span id="demo"></span>
+                <div id="json"></div>
+            </div>
         </div>
 
         <div class="crew">
-            <div id="miners"></div>
-            <div id="engineers"></div>
-            <div id="scientists"></div>
+            <div class="crew-column">
+                <h2 class="crew-headers">Miners ⚒</h2>
+                <div id="miners"></div>
+            </div>
+            <div class="crew-column">
+                <h2 class="crew-headers">Engineers ⚙️</h2>
+                <div id="engineers"></div>
+            </div>
+            <div class="crew-column">
+                <h2 class="crew-headers">Scientists 🔬</h2>
+                <div id="scientists"></div>
+            </div>
         </div>
 
         <div id="root"></div>

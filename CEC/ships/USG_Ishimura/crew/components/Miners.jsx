@@ -86,7 +86,7 @@ function Miners() {
                         </div>
                     ))
                 ) : (
-                    <p>Loading Miners ⚒...</p>
+                    <p className="loading">Loading Miners ⚒...</p>
                 )}
             </div>
         </div>

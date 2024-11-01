@@ -1,6 +1,6 @@
-import renderMiners from './ships/USG_Ishimura/crew/scripts/helpers/renderMiners.js';
-import renderEngineers from './ships/USG_Ishimura/crew/scripts/helpers/renderEngineers.js';
-import renderScientists from './ships/USG_Ishimura/crew/scripts/helpers/renderScientists.js';
+import renderMiners from './renderMiners.js';
+import renderEngineers from './renderEngineers.js';
+import renderScientists from './renderScientists.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.querySelector('.toggle-btn');

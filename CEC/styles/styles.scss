@@ -7,64 +7,17 @@ $color-border-engineer: blue;
 $color-border-scientist: green;
 $box-shadow: 10px 5px 5px 0px gainsboro;
 
-.btn-container {
-    display: flex;
-    flex-direction: column;
-    transform: rotate(-90deg);
-}
-
-.toggle-btn {
-    position: fixed;
-    top: -955px;
-    left: 560px;
-    z-index: 1001;
-    padding: 10px 20px;
-    background-color: $color-primary;
-    color: $color-secondary;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-
-    &:hover {
-        background-color: $color-hover;
-    }
-}
-
-.raw-res {
-    position: fixed;
-    top: 0;
-    left: -750px;
-    z-index: 1000;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: left 0.5s ease;
-    overflow-y: auto;
-
-    width: 700px;
-    height: 100%;
-    margin: 30px;
-    padding: 25px;
-
-    background-color: $color-secondary;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-
-    &.open {
-        left: 10px;
-    }
-}
-
 #hub {
     .crew {
         display: flex;
         flex-direction: column;
         align-items: center;
+        background-color: $color-bg-dark;
     }
 
     h1 {
         text-align: center;
+        color: $color-secondary;
     }
 
     .navigation {
@@ -72,6 +25,7 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
         gap: 20px;
         justify-content: center;
         margin: 15px 0;
+        color: $color-secondary;
     }
 
     .routes {
@@ -81,6 +35,7 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
             h2 {
                 text-align: center;
                 margin-bottom: 20px;
+                color: $color-secondary;
             }
 
             .miners-grid {
@@ -99,6 +54,9 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
                     border: 6px solid $color-border-miner;
                 }
             }
+            .loading {
+                color: $color-secondary;
+            }
         }
 
         #engineers {
@@ -107,6 +65,7 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
             h2 {
                 text-align: center;
                 margin-bottom: 20px;
+                color: $color-secondary;
             }
 
             .engineers-grid {
@@ -125,6 +84,9 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
                     border: 6px solid $color-border-engineer;
                 }
             }
+            .loading {
+                color: $color-secondary;
+            }
         }
 
         #scientists {
@@ -133,6 +95,7 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
             h2 {
                 text-align: center;
                 margin-bottom: 20px;
+                color: $color-secondary;
             }
 
             .scientists-grid {
@@ -150,6 +113,9 @@ $box-shadow: 10px 5px 5px 0px gainsboro;
                     background-color: $color-secondary;
                     border: 6px solid $color-border-scientist;
                 }
+            }
+            .loading {
+                color: $color-secondary;
             }
         }
     }

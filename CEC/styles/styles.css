@@ -1,60 +1,19 @@
-.btn-container {
-  display: flex;
-  flex-direction: column;
-  transform: rotate(-90deg);
-}
-
-.toggle-btn {
-  position: fixed;
-  top: -955px;
-  left: 560px;
-  z-index: 1001;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #f0f0f0;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-.toggle-btn:hover {
-  background-color: rgba(0, 123, 255, 0.76);
-}
-
-.raw-res {
-  position: fixed;
-  top: 0;
-  left: -750px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: left 0.5s ease;
-  overflow-y: auto;
-  width: 700px;
-  height: 100%;
-  margin: 30px;
-  padding: 25px;
-  background-color: #f0f0f0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-}
-.raw-res.open {
-  left: 10px;
-}
-
 #hub .crew {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: black;
 }
 #hub h1 {
   text-align: center;
+  color: #f0f0f0;
 }
 #hub .navigation {
   display: flex;
   gap: 20px;
   justify-content: center;
   margin: 15px 0;
+  color: #f0f0f0;
 }
 #hub .routes #miners {
   padding: 20px;
@@ -62,6 +21,7 @@
 #hub .routes #miners h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #f0f0f0;
 }
 #hub .routes #miners .miners-grid {
   display: grid;
@@ -78,12 +38,16 @@
   background-color: #f0f0f0;
   border: 6px solid red;
 }
+#hub .routes #miners .loading {
+  color: #f0f0f0;
+}
 #hub .routes #engineers {
   padding: 20px;
 }
 #hub .routes #engineers h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #f0f0f0;
 }
 #hub .routes #engineers .engineers-grid {
   display: grid;
@@ -100,12 +64,16 @@
   background-color: #f0f0f0;
   border: 6px solid blue;
 }
+#hub .routes #engineers .loading {
+  color: #f0f0f0;
+}
 #hub .routes #scientists {
   padding: 20px;
 }
 #hub .routes #scientists h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #f0f0f0;
 }
 #hub .routes #scientists .scientists-grid {
   display: grid;
@@ -121,6 +89,9 @@
   color: black;
   background-color: #f0f0f0;
   border: 6px solid green;
+}
+#hub .routes #scientists .loading {
+  color: #f0f0f0;
 }
 
 /*# sourceMappingURL=styles.css.map */
