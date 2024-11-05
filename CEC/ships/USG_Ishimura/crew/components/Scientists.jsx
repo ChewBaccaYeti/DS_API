@@ -5,23 +5,65 @@ import {
     renderCertifications,
     renderEquipment,
 } from '../scripts/helpers/cert_eq.js';
+import {
+    sortByRank,
+    sortByExp,
+    SortButtons,
+} from '../scripts/helpers/sorters.js';
 
 function Scientists() {
-    const [scientists, setScientists] = useState([]);
+    const [crew, setCrew] = useState([]);
+    const [sortRank, setRank] = useState('asc');
+    const [sortExp, setExp] = useState('asc');
 
     useEffect(() => {
-        fetchScientists().then(data => setScientists(data));
+        fetchScientists().then(data => setCrew(data));
     }, []);
+
+    const handleSortByRank = () => {
+        setCrew(sortByRank(crew, sortRank));
+        setRank(sortRank === 'asc' ? 'desc' : 'asc');
+    };
+
+    const handleSortByExp = () => {
+        setCrew(sortByExp(crew, sortExp));
+        setExp(sortExp === 'asc' ? 'desc' : 'asc');
+    };
 
     return (
         <div id="scientists">
             <h2>Welcome to Medical Bay 🔬</h2>
+            <SortButtons
+                sortRank={sortRank}
+                sortExp={sortExp}
+                onSortByRank={handleSortByRank}
+                onSortByExp={handleSortByExp}
+            />
             <div className="scientists-grid">
-                {scientists.length > 0 ? (
-                    scientists.map(scientist => (
+                {crew.length > 0 ? (
+                    crew.map(scientist => (
                         <div key={scientist.id} className="scientist">
                             <h3>{scientist.name}</h3>
                             <ul>
+                                <li>
+                                    <p>
+                                        <strong>Status:</strong>{' '}
+                                        {scientist.activeStatus
+                                            ? 'Active'
+                                            : 'Deactivated'}
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Execution ID:</strong>{' '}
+                                        {scientist.id}
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Rank:</strong> {scientist.rank}
+                                    </p>
+                                </li>
                                 <li>
                                     <p>
                                         <strong>Role:</strong>{' '}
@@ -39,11 +81,6 @@ function Scientists() {
                                     <p>
                                         <strong>Citizenship:</strong>{' '}
                                         {scientist.citizenship}
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>
-                                        <strong>Rank:</strong> {scientist.rank}
                                     </p>
                                 </li>
                                 <li>

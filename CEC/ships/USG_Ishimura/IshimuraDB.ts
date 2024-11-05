@@ -5,16 +5,22 @@
     node.js
     Typescript
 */
-require('dotenv').config({ path: './.env.local' });
+require('dotenv').config({ path: '.env' });
 
 const express = require('express');
 const app = express();
+const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const username = process.env.MONGO_AEGIS_ADMIN;
 const password = process.env.MONGO_AEGIS_PASS;
 const database = process.env.MONGO_AEGIS_DB;
+
+app.use(helmet());
+app.use(helmet.hsts());
+app.use(helmet.noSniff());
+app.use(helmet.xssFilter());
 
 app.use(cors({ origin: '*' }));
 

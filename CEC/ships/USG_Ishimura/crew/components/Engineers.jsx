@@ -5,23 +5,65 @@ import {
     renderCertifications,
     renderEquipment,
 } from '../scripts/helpers/cert_eq.js';
+import {
+    sortByRank,
+    sortByExp,
+    SortButtons,
+} from '../scripts/helpers/sorters.js';
 
 function Engineers() {
-    const [engineers, setEngineers] = useState([]);
+    const [crew, setCrew] = useState([]);
+    const [sortRank, setRank] = useState('asc');
+    const [sortExp, setExp] = useState('asc');
 
     useEffect(() => {
-        fetchEngineers().then(data => setEngineers(data));
+        fetchEngineers().then(data => setCrew(data));
     }, []);
+
+    const handleSortByRank = () => {
+        setCrew(sortByRank(crew, sortRank));
+        setRank(sortRank === 'asc' ? 'desc' : 'asc');
+    };
+
+    const handleSortByExp = () => {
+        setCrew(sortByExp(crew, sortExp));
+        setExp(sortExp === 'asc' ? 'desc' : 'asc');
+    };
 
     return (
         <div id="engineers">
             <h2>Welcome to Engineering ⚙️</h2>
+            <SortButtons
+                sortRank={sortRank}
+                sortExp={sortExp}
+                onSortByRank={handleSortByRank}
+                onSortByExp={handleSortByExp}
+            />
             <div className="engineers-grid">
-                {engineers.length > 0 ? (
-                    engineers.map(engineer => (
+                {crew.length > 0 ? (
+                    crew.map(engineer => (
                         <div key={engineer.id} className="engineer">
                             <h3>{engineer.name}</h3>
                             <ul>
+                                <li>
+                                    <p>
+                                        <strong>Status:</strong>{' '}
+                                        {engineer.activeStatus
+                                            ? 'Active'
+                                            : 'Deactivated'}
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Execution ID:</strong>{' '}
+                                        {engineer.id}
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Rank:</strong> {engineer.rank}
+                                    </p>
+                                </li>
                                 <li>
                                     <p>
                                         <strong>Role:</strong>{' '}
@@ -39,11 +81,6 @@ function Engineers() {
                                     <p>
                                         <strong>Citizenship:</strong>{' '}
                                         {engineer.citizenship}
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>
-                                        <strong>Rank:</strong> {engineer.rank}
                                     </p>
                                 </li>
                                 <li>

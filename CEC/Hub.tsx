@@ -11,9 +11,17 @@ const Hub: React.FC = () => {
                 <div className='crew'>
                     <h1>Concordance Extraction Corporation</h1>
                     <nav className='navigation'>
-                        <Link to="/miners">Miners ⚒</Link>
-                        <Link to="/engineers">Engineers ⚙️</Link>
-                        <Link to="/scientists">Scientists 🔬</Link>
+                        <ul className='nav-list'>
+                            <li className='nav-list__item'>
+                                <button className='nav-list__btn'><Link to="/miners">Miners ⚒</Link></button>
+                            </li>
+                            <li className='nav-list__item'>
+                                <button className='nav-list__btn'><Link to="/engineers">Engineers ⚙️</Link></button>
+                            </li>
+                            <li className='nav-list__item'>
+                                <button className='nav-list__btn'><Link to="/scientists">Scientists 🔬</Link></button>
+                            </li>
+                        </ul>
                     </nav>
                     <div className='routes'>
                         <Routes>
