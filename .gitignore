@@ -110,3 +110,6 @@ dist
 
 # JS compiled files
 archive/
+
+# legacy/original style and logic
+legacy/

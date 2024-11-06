@@ -1,23 +1,101 @@
 $color-primary: #ff6a13;
-$color-secondary: #f0f0f0;
-$color-third-dark: #0d0d1b;
+$color-secondary: #007bff;
+$color-third: #2cbb6359;
+$color-btn: #ffffff15;
+$color-bright: #f0f0f0;
+$color-dark: #0d0d1b;
+$color-grey: #28282d;
 $color-hover: rgba($color-primary, 0.76);
 $color-red-miner: #c72424;
 $color-blue-engineer: #1a76d2;
 $color-green-scientist: #2ecc71;
 $box-shadow: 10px 10px 5px 0px #4b4b4b;
 
+$border-thickness: 3px;
+$corner-size: 0.45em;
+
 #hub {
     .crew {
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: $color-third-dark;
+        background-color: $color-dark;
+
+        .toggle-raw__btn {
+            --b: #{$border-thickness};
+            --s: #{$corner-size};
+            --color: $color-bright;
+
+            margin: 16px 0 8px 0;
+            padding: calc(0.3em + var(--s)) calc(0.7em + var(--s));
+            color: var(--color);
+            --_p: var(--s);
+
+            background: conic-gradient(from 90deg at var(--b) var(--b), $color-btn 90deg, var(--color) 0) var(--_p)
+                var(--_p) / calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+            transition:
+                0.3s linear,
+                color 0s,
+                background-color 0s;
+            border-radius: 8px;
+
+            outline: var(--b) solid $color-grey;
+            outline-offset: 0.6em;
+            font-size: 16px;
+            color: $color-bright;
+
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+
+            &:hover,
+            &:focus-visible {
+                --_p: 0px;
+                outline-color: var(--color);
+                outline-offset: 0.05em;
+            }
+
+            &:active {
+                background: var(--color);
+            }
+        }
+
+        .raw-data {
+            display: grid;
+            grid-template-columns: repeat((3, 1fr));
+            padding: 16px;
+            gap: 16px;
+            color: $color-dark;
+            background-color: $color-bright;
+            border-radius: 8px;
+
+            .loading {
+                color: $color-dark;
+            }
+
+            .raw-data__object {
+                padding: 16px;
+                border: 1px solid $color-dark;
+                border-radius: 8px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+                pre {
+                    padding: 10px;
+                    border-radius: 5px;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+            }
+        }
+
+        .loading {
+            color: $color-bright;
+        }
     }
 
     h1 {
         text-align: center;
-        color: $color-secondary;
+        color: $color-bright;
     }
 
     .navigation {
@@ -25,7 +103,7 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
         gap: 20px;
         justify-content: center;
         margin: 15px 0;
-        color: $color-secondary;
+        color: $color-bright;
 
         .nav-list {
             display: flex;
@@ -41,7 +119,7 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
                     background: transparent;
                     border: none;
                     position: relative;
-                    color: $color-secondary;
+                    color: $color-bright;
                     cursor: pointer;
                     z-index: 1;
                     padding: 10px 20px;
@@ -67,7 +145,7 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
                         transform: translate(0%, 0%);
                         width: 100%;
                         height: 100%;
-                        background: #28282d;
+                        background: $color-grey;
                         border-radius: 10px;
                     }
 
@@ -75,7 +153,7 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
                         transform: translate(10px, 10px);
                         width: 35px;
                         height: 35px;
-                        background: #ffffff15;
+                        background: $color-btn;
                         backdrop-filter: blur(5px);
                         -webkit-backdrop-filter: blur(5px);
                         border-radius: 50px;
@@ -110,15 +188,15 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
         gap: 15px;
 
         .btn-sort {
-            background-color: $color-hover;
+            background-color: $color-btn;
             border-radius: 100px;
             box-shadow:
-                $color-primary 0 -25px 18px -14px inset,
-                $color-primary 0 1px 2px,
-                $color-primary 0 2px 4px,
-                rgb(0, 123, 255) 0 4px 8px,
-                rgb(0, 123, 255) 0 8px 16px;
-            color: $color-secondary;
+                $color-btn 0 -25px 18px -14px inset,
+                $color-btn 0 1px 2px,
+                $color-btn 0 2px 4px,
+                $color-secondary 0 4px 8px,
+                $color-secondary 0 8px 16px;
+            color: $color-bright;
             cursor: pointer;
             display: inline-block;
             font-family:
@@ -139,12 +217,12 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
 
             &:hover {
                 box-shadow:
-                    rgba(44, 187, 99, 0.35) 0 -25px 18px -14px inset,
-                    rgba(44, 187, 99, 0.25) 0 1px 2px,
-                    rgba(44, 187, 99, 0.25) 0 2px 4px,
-                    rgba(44, 187, 99, 0.25) 0 4px 8px,
-                    rgba(44, 187, 99, 0.25) 0 8px 16px,
-                    rgba(44, 187, 99, 0.25) 0 16px 32px;
+                    $color-third 0 -25px 18px -14px inset,
+                    $color-third 0 1px 2px,
+                    $color-third 0 2px 4px,
+                    $color-third 0 4px 8px,
+                    $color-third 0 8px 16px,
+                    $color-third 0 16px 32px;
                 transform: scale(1.05) rotate(-1deg);
             }
         }
@@ -157,7 +235,7 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
             h2 {
                 text-align: center;
                 margin-bottom: 20px;
-                color: $color-secondary;
+                color: $color-bright;
             }
 
             .miners-grid {
@@ -171,8 +249,8 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
                     padding: 14px;
                     border-radius: 6px;
                     box-shadow: $box-shadow;
-                    color: black;
-                    background-color: $color-secondary;
+                    color: $color-dark;
+                    background-color: $color-bright;
                     border: 6px solid $color-red-miner;
 
                     h3 {
@@ -188,7 +266,7 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
             h2 {
                 text-align: center;
                 margin-bottom: 20px;
-                color: $color-secondary;
+                color: $color-bright;
             }
 
             .engineers-grid {
@@ -202,8 +280,8 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
                     padding: 14px;
                     border-radius: 6px;
                     box-shadow: $box-shadow;
-                    color: black;
-                    background-color: $color-secondary;
+                    color: $color-dark;
+                    background-color: $color-bright;
                     border: 6px solid $color-blue-engineer;
 
                     h3 {
@@ -219,7 +297,7 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
             h2 {
                 text-align: center;
                 margin-bottom: 20px;
-                color: $color-secondary;
+                color: $color-bright;
             }
 
             .scientists-grid {
@@ -233,8 +311,8 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
                     padding: 14px;
                     border-radius: 6px;
                     box-shadow: $box-shadow;
-                    color: black;
-                    background-color: $color-secondary;
+                    color: $color-dark;
+                    background-color: $color-bright;
                     border: 6px solid $color-green-scientist;
 
                     h3 {
@@ -244,8 +322,4 @@ $box-shadow: 10px 10px 5px 0px #4b4b4b;
             }
         }
     }
-}
-
-.loading {
-    color: $color-secondary;
 }

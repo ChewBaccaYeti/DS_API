@@ -18,7 +18,7 @@ html, body {
     letter-spacing: 0.05em;
     color: #333;
     height: 100%;
-    background-color: #fff;
+    background-color: #f0f0f0;
 }
 
 code {
@@ -90,8 +90,10 @@ ul, ol {
 
 /* ==== Accessibility and Focus ==== */
 :focus {
-    outline: 2px solid #007bff;
+    padding: 4px;
+    outline: 2px solid 10px 10px 5px 0px #4b4b4b;
     outline-offset: 2px;
+    border-radius: 12px;
 }
 
 /* ==== Responsive Typography ==== */
