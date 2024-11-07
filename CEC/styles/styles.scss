@@ -15,6 +15,7 @@ $border-thickness: 3px;
 $corner-size: 0.45em;
 
 #hub {
+    background: $color-dark;
     .crew {
         display: flex;
         flex-direction: column;

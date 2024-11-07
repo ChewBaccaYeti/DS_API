@@ -1,3 +1,6 @@
+#hub {
+  background: #0d0d1b;
+}
 #hub .crew {
   display: flex;
   flex-direction: column;

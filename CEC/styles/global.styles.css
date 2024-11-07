@@ -7,10 +7,12 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;
@@ -18,28 +20,46 @@ html, body {
     letter-spacing: 0.05em;
     color: #333;
     height: 100%;
-    background-color: #f0f0f0;
+    background-color: #0d0d1b;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }
 
 /* ==== Global Styles ==== */
 
 /* Типографика */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 600;
     color: #222;
     line-height: 1.2;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
-h1 { font-size: 2rem; }
-h2 { font-size: 1.75rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.25rem; }
-h5 { font-size: 1rem; }
-h6 { font-size: 0.875rem; }
+h1 {
+    font-size: 2rem;
+}
+h2 {
+    font-size: 1.75rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+h4 {
+    font-size: 1.25rem;
+}
+h5 {
+    font-size: 1rem;
+}
+h6 {
+    font-size: 0.875rem;
+}
 
 p {
     margin-bottom: 1em;
@@ -53,7 +73,10 @@ a:hover {
     text-decoration: underline;
 }
 
-button, input, textarea, select {
+button,
+input,
+textarea,
+select {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -84,7 +107,8 @@ img {
 }
 
 /* ==== Lists ==== */
-ul, ol {
+ul,
+ol {
     list-style: none;
 }
 
@@ -98,13 +122,24 @@ ul, ol {
 
 /* ==== Responsive Typography ==== */
 @media (max-width: 768px) {
-    h1 { font-size: 1.75rem; }
-    h2 { font-size: 1.5rem; }
-    h3 { font-size: 1.25rem; }
+    h1 {
+        font-size: 1.75rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    h3 {
+        font-size: 1.25rem;
+    }
 }
 
 /* Basic margin reset for common elements */
-section, article, aside, footer, header, nav {
+section,
+article,
+aside,
+footer,
+header,
+nav {
     margin: 0;
     padding: 0;
 }

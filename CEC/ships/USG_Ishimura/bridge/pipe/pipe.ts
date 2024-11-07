@@ -16,4 +16,4 @@ export default function pipe() {
     app.use(router);
 
     return app;
-};
+}

@@ -15,41 +15,45 @@ const port = process.env.PORT || 3000;
 const app = pipe();
 
 if (!username || !password || !database) {
-    throw new Error("One or more MongoDB connection environment variables are undefined");
+    throw new Error(
+        'One or more MongoDB connection environment variables are undefined',
+    );
 }
 
-mongoose.connect(
-    `mongodb+srv://${username}:${password}@${database}.fm1e1.mongodb.net/${database}?retryWrites=true&w=majority&appName=${database}`
-).then(async () => {
-    console.log('MongoDB Connection successful.')
-    
-    console.log('Fetching and logging crew data...')
-    
-    await logAllData();
-    
-    app.listen(port, () => {
-        console.log(`Server running at http://localhost:${port}`);
+mongoose
+    .connect(
+        `mongodb+srv://${username}:${password}@${database}.fm1e1.mongodb.net/${database}?retryWrites=true&w=majority&appName=${database}`,
+    )
+    .then(async () => {
+        console.log('MongoDB Connection successful.');
+
+        console.log('Fetching and logging crew data...');
+
+        await logAllData();
+
+        app.listen(port, () => {
+            console.log(`Server running at http://localhost:${port}`);
+        });
+    })
+    .catch((error: Error) => {
+        console.error('MongoDB connection error:', error);
     });
-}).catch((error: Error) => {
-    console.error('MongoDB connection error:', error)
-});
 
 async function logAllData() {
     try {
-        const miners = await getMiners()
-        const engineers = await getEngineers()
-        const scientists = await getScientists()
+        const miners = await getMiners();
+        const engineers = await getEngineers();
+        const scientists = await getScientists();
 
-        console.log('\n--- Miners Data ---')
-        console.log(miners)
-        
-        console.log('\n--- Engineers Data ---')
-        console.log(engineers)
+        console.log('\n--- Miners Data ---');
+        console.log(miners);
 
-        console.log('\n--- Scientists Data ---')
-        console.log(scientists)
+        console.log('\n--- Engineers Data ---');
+        console.log(engineers);
 
+        console.log('\n--- Scientists Data ---');
+        console.log(scientists);
     } catch (error) {
-        console.error('Error during data fetching:', error)
+        console.error('Error during data fetching:', error);
     }
-};
+}

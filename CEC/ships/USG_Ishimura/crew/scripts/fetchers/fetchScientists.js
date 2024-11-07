@@ -7,4 +7,4 @@ export default async function fetchScientists() {
         console.error('Failed to fetch scientists:', err);
         return [];
     }
-};
+}

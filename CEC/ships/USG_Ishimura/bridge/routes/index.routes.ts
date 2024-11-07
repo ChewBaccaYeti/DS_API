@@ -9,9 +9,9 @@ const router = Router();
 router.get('/', (req, res) => {
     res.send(
         'Hello, World! ' +
-        'You must be looking for the Mining Deck. Go to the `/miners` endpoint. ' +
-        'If you are looking for the Engineer Deck, go to the `/engineers` endpoint. ' +
-        'If you need Medical Bay, go to `/scientists` endpoint.'
+            'You must be looking for the Mining Deck. Go to the `/miners` endpoint. ' +
+            'If you are looking for the Engineer Deck, go to the `/engineers` endpoint. ' +
+            'If you need Medical Bay, go to `/scientists` endpoint.',
     );
 });
 

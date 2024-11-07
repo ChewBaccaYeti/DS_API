@@ -6,7 +6,8 @@ const Scientist = mongoose.model('Scientist', CEC_schema, 'Scientists');
 
 export const fetchScientists = async () => {
     try {
-        const scientistsData: CEC_Type[] = await Scientist.find() as CEC_Type[];
+        const scientistsData: CEC_Type[] =
+            (await Scientist.find()) as CEC_Type[];
         console.log('Scientists: ', scientistsData);
 
         const scientistsArray = scientistsData.map((scientist: CEC_Type) => {
@@ -24,7 +25,7 @@ export const fetchScientists = async () => {
                 scientist.certifications,
                 scientist.equipment,
                 scientist.activeStatus,
-                scientist.lastMission
+                scientist.lastMission,
             );
         });
 

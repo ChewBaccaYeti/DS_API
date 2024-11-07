@@ -6,7 +6,7 @@ const Miner = mongoose.model('Miner', CEC_schema, 'Miners');
 
 export const fetchMiners = async () => {
     try {
-        const minersData: CEC_Type[] = await Miner.find() as CEC_Type[];
+        const minersData: CEC_Type[] = (await Miner.find()) as CEC_Type[];
         console.log('Miners: ', minersData);
 
         const minersArray = minersData.map((miner: CEC_Type) => {
@@ -24,7 +24,7 @@ export const fetchMiners = async () => {
                 miner.certifications,
                 miner.equipment,
                 miner.activeStatus,
-                miner.lastMission
+                miner.lastMission,
             );
         });
 

@@ -6,7 +6,7 @@ const Engineer = mongoose.model('Engineer', CEC_schema, 'Engineers');
 
 export const fetchEngineers = async () => {
     try {
-        const engineersData: CEC_Type[] = await Engineer.find() as CEC_Type[];
+        const engineersData: CEC_Type[] = (await Engineer.find()) as CEC_Type[];
         console.log('Engineers: ', engineersData);
 
         const engineersArray = engineersData.map((engineer: CEC_Type) => {
@@ -24,7 +24,7 @@ export const fetchEngineers = async () => {
                 engineer.certifications,
                 engineer.equipment,
                 engineer.activeStatus,
-                engineer.lastMission
+                engineer.lastMission,
             );
         });
 

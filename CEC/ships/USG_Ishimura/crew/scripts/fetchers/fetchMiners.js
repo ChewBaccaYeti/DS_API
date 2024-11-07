@@ -7,4 +7,4 @@ export default async function fetchMiners() {
         console.error('Failed to fetch miners:', err);
         return [];
     }
-};
+}

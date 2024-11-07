@@ -8,40 +8,55 @@ const Hub: React.FC = () => {
     const [isRaw, setIsRaw] = React.useState(false);
 
     const toggleRaw = () => {
-        setIsRaw(prevState => !prevState)
+        setIsRaw(prevState => !prevState);
     };
     return (
         <Router>
-            <div id='hub'>
-                <div className='crew'>
+            <div id="hub">
+                <div className="crew">
                     <h1>Concordance Extraction Corporation</h1>
-                    <button className='toggle-raw__btn' onClick={toggleRaw}>
+                    <button className="toggle-raw__btn" onClick={toggleRaw}>
                         {isRaw ? 'Show Styled Data' : 'Show Raw Data'}
                     </button>
-                    <nav className='navigation'>
-                        <ul className='nav-list'>
-                            <li className='nav-list__item'>
-                                <button className='nav-list__btn'><Link to='/miners'>Miners ⚒</Link></button>
+                    <nav className="navigation">
+                        <ul className="nav-list">
+                            <li className="nav-list__item">
+                                <button className="nav-list__btn">
+                                    <Link to="/miners">Miners ⚒</Link>
+                                </button>
                             </li>
-                            <li className='nav-list__item'>
-                                <button className='nav-list__btn'><Link to='/engineers'>Engineers ⚙️</Link></button>
+                            <li className="nav-list__item">
+                                <button className="nav-list__btn">
+                                    <Link to="/engineers">Engineers ⚙️</Link>
+                                </button>
                             </li>
-                            <li className='nav-list__item'>
-                                <button className='nav-list__btn'><Link to='/scientists'>Scientists 🔬</Link></button>
+                            <li className="nav-list__item">
+                                <button className="nav-list__btn">
+                                    <Link to="/scientists">Scientists 🔬</Link>
+                                </button>
                             </li>
                         </ul>
                     </nav>
-                    <div className='routes'>
+                    <div className="routes">
                         <Routes>
-                            <Route path='/miners' element={<Miners isRaw={isRaw}/>} />
-                            <Route path='/engineers' element={<Engineers isRaw={isRaw}/>} />
-                            <Route path='/scientists' element={<Scientists isRaw={isRaw}/>} />
+                            <Route
+                                path="/miners"
+                                element={<Miners isRaw={isRaw} />}
+                            />
+                            <Route
+                                path="/engineers"
+                                element={<Engineers isRaw={isRaw} />}
+                            />
+                            <Route
+                                path="/scientists"
+                                element={<Scientists isRaw={isRaw} />}
+                            />
                         </Routes>
                     </div>
                 </div>
             </div>
         </Router>
     );
-}
+};
 
 export default Hub;

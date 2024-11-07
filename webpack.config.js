@@ -6,7 +6,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
-        publicPath: '/'
+        publicPath: '/',
     },
     mode: 'development',
     module: {
@@ -17,24 +17,24 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react']
-                    }
-                }
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
+                },
             },
             {
                 test: /\.(css|scss)$/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
+                use: ['style-loader', 'css-loader', 'sass-loader'],
             },
             {
                 test: /\.s[ac]ss$/i,
-                use: ['style-loader', 'css-loader', 'sass-loader']
-            }
-        ]
+                use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './CEC/public/index.html',
-        })
+        }),
     ],
     devServer: {
         static: {
@@ -42,9 +42,9 @@ module.exports = {
         },
         historyApiFallback: true,
         port: 3000,
-        open: true
+        open: true,
     },
     resolve: {
-        extensions: ['.js', '.jsx', 'ts', 'tsx', '.css', '.scss']
-    }
+        extensions: ['.js', '.jsx', 'ts', 'tsx', '.css', '.scss'],
+    },
 };

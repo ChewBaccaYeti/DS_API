@@ -2,7 +2,7 @@ import React from 'react';
 
 export const sortByRank = (crew, sortRank) => {
     return [...crew].sort((a, b) =>
-        sortRank === 'asc' ? a.rank - b.rank : b.rank - a.rank
+        sortRank === 'asc' ? a.rank - b.rank : b.rank - a.rank,
     );
 };
 
@@ -23,7 +23,8 @@ export function SortButtons({ sortRank, sortExp, onSortByRank, onSortByExp }) {
                 Sort by Rank ({sortRank === 'asc' ? 'Ascending' : 'Descending'})
             </button>
             <button className="btn-sort" onClick={onSortByExp}>
-                Sort by Experience ({sortExp === 'asc' ? 'Ascending' : 'Descending'})
+                Sort by Experience (
+                {sortExp === 'asc' ? 'Ascending' : 'Descending'})
             </button>
         </div>
     );
