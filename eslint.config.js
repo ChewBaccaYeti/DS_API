@@ -1,4 +1,4 @@
-const { browser } = require('globals'); // Corrected import
+const { browser } = require('globals');
 const tseslintPlugin = require('@typescript-eslint/eslint-plugin');
 const tsParser = require('@typescript-eslint/parser');
 const pluginReact = require('eslint-plugin-react');
@@ -10,12 +10,22 @@ module.exports = [
         files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
         languageOptions: {
             globals: {
-                ...browser, // Use the 'browser' global only
+                ...browser,
             },
             parser: tsParser,
             parserOptions: {
-                project: './tsconfig.json', // Path to TypeScript config
+                ecmaVersion: 2020,
+                sourceType: 'module',
+                project: './tsconfig.json',
+                ecmaFeatures: {
+                    jsx: true,
+                },
             },
+        },
+        env: {
+            browser: true,
+            node: true,
+            es6: true,
         },
         plugins: {
             '@typescript-eslint': tseslintPlugin,
@@ -23,7 +33,6 @@ module.exports = [
         },
     },
     {
-        // JavaScript rules
         rules: {
             'no-unused-vars': 'error',
             'no-undef': 'error',
@@ -38,14 +47,13 @@ module.exports = [
             'prefer-const': 'error',
             'arrow-parens': ['error', 'as-needed'],
             'prefer-arrow-callback': 'error',
-            'no-shadow': 'error', // Prevent variable shadowing
-            'consistent-return': 'error', // Enforce consistent return statements
-            'max-lines': ['warn', 300], // Limit the number of lines in a file
+            'no-shadow': 'error',
+            'consistent-return': 'error',
+            'max-lines': ['warn', 300],
             '@typescript-eslint/no-explicit-any': 'off',
         },
     },
     {
-        // TypeScript rules from @typescript-eslint
         rules: {
             '@typescript-eslint/no-unused-vars': ['error'],
             '@typescript-eslint/no-explicit-any': 'warn',
@@ -61,24 +69,28 @@ module.exports = [
                     ],
                 },
             ],
-            '@typescript-eslint/explicit-function-return-type': 'off', // Disable for general cases, enable if needed in specific cases
+            '@typescript-eslint/explicit-function-return-type': 'off',
         },
     },
     {
-        // React rules from eslint-plugin-react
+        settings: {
+            react: {
+                version: 'detect',
+            },
+        },
         rules: {
             'react/jsx-uses-react': 'error',
             'react/jsx-uses-vars': 'error',
-            'react/react-in-jsx-scope': 'error',
-            'react/prop-types': 'off', // if using TypeScript for type checking
+            'react/react-in-jsx-scope': 'off',
+            'react/prop-types': 'off',
             'react/display-name': 'off',
             'react/no-unescaped-entities': 'warn',
             'react/jsx-no-undef': 'error',
             'react/no-deprecated': 'warn',
-            'react/jsx-max-props-per-line': ['error', { maximum: 3 }], // Limit props per line
+            'react/jsx-max-props-per-line': ['error', { maximum: 3 }],
         },
     },
-    prettierConfig, // Integrate Prettier config to disable conflicting rules
+    prettierConfig,
     {
         rules: {
             'prettier/prettier': 'error',

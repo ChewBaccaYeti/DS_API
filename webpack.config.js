@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: './CEC/src/index.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'CEC/archive/dist'),
         filename: 'bundle.js',
         publicPath: '/',
     },
@@ -25,10 +25,6 @@ module.exports = {
                 test: /\.(css|scss)$/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
-            {
-                test: /\.s[ac]ss$/i,
-                use: ['style-loader', 'css-loader', 'sass-loader'],
-            },
         ],
     },
     plugins: [
@@ -45,6 +41,6 @@ module.exports = {
         open: true,
     },
     resolve: {
-        extensions: ['.js', '.jsx', 'ts', 'tsx', '.css', '.scss'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss'],
     },
 };
