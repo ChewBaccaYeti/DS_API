@@ -119,5 +119,5 @@
         "CEC/ships/USG_Ishimura/bridge/routes/index.routes.ts",
         "webpack.config.js"
     ],
-    "exclude": ["node_modules",]
+    "exclude": ["node_modules"]
 }
