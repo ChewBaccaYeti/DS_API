@@ -42,7 +42,7 @@ function Scientists({ isRaw }) {
                             </div>
                         ))
                     ) : (
-                        <p className="loading">Loading Engineers ⚙️...</p>
+                        <p className="loading">Loading Scientists ⚙️...</p>
                     )}
                 </div>
             ) : (
