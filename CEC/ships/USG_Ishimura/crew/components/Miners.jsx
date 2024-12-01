@@ -32,6 +32,7 @@ function Miners({ isRaw }) {
 
     return (
         <div id="miners">
+            <h2>Welcome to Mining Deck ⚒</h2>
             {isRaw ? (
                 <div className="raw-data">
                     {crew.length > 0 ? (
@@ -41,12 +42,11 @@ function Miners({ isRaw }) {
                             </div>
                         ))
                     ) : (
-                        <p className="loading">Loading Miners ⚙️...</p>
+                        <p className="loading">Loading Miners ⚒...</p>
                     )}
                 </div>
             ) : (
                 <>
-                    <h2>Welcome to Mining Deck ⚒</h2>
                     <SortButtons
                         sortRank={sortRank}
                         sortExp={sortExp}
