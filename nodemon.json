@@ -1,7 +1,15 @@
 {
-    "watch": ["."],
-    "ext": "js,ts,json",
-    "ignore": ["node_modules/", ".git/", "index.html"],
+    "watch": ["CEC/archive/ships/USG_Ishimura/bridge/server/"],
+    "ext": "js",
+    "ignore": [
+        "node_modules/", 
+        ".git/", 
+        "index.html",
+        "CEC/ships/",
+        "*.ts",
+        "*.scss",
+        "*.css"
+    ],
     "execMap": {
         "js": "node",
         "ts": "ts-node"

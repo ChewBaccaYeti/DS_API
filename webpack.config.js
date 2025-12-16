@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+require('dotenv').config({ path: '.env' });
 
 module.exports = {
     entry: './CEC/src/index.js',
@@ -37,7 +38,7 @@ module.exports = {
             directory: path.join(__dirname, './CEC/public'),
         },
         historyApiFallback: true,
-        port: 3000,
+        port: process.env.SERVER_PORT,
         open: true,
     },
     resolve: {

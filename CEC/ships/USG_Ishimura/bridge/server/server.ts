@@ -7,14 +7,15 @@ import { getMiners } from '../../crew/controllers/miner.controller';
 import { getEngineers } from '../../crew/controllers/engineer.controller';
 import { getScientists } from '../../crew/controllers/scientist.controller';
 
-const username = process.env.MONGO_AEGIS_ADMIN;
-const password = process.env.MONGO_AEGIS_PASS;
-const database = process.env.MONGO_AEGIS_DB;
-const port = process.env.PORT || 3000;
+const username = process.env.MONGO_CEC_ADMIN;
+const password = process.env.MONGO_CEC_PASS;
+const connection = process.env.MONGO_CEC_CONN;
+const database = process.env.MONGO_CEC_DB;
+const port = process.env.APP_PORT;
 
 const app = pipe();
 
-if (!username || !password || !database) {
+if (!username || !password || !connection || !database) {
     throw new Error(
         'One or more MongoDB connection environment variables are undefined',
     );
@@ -22,7 +23,7 @@ if (!username || !password || !database) {
 
 mongoose
     .connect(
-        `mongodb+srv://${username}:${password}@${database}.fm1e1.mongodb.net/${database}?retryWrites=true&w=majority&appName=${database}`,
+        `mongodb+srv://${username}:${password}@${connection}.fm1e1.mongodb.net/${database}?retryWrites=true&w=majority&appName=${connection}`,
     )
     .then(async () => {
         console.log('MongoDB Connection successful.');
