@@ -30,11 +30,20 @@ module.exports = [
         plugins: {
             '@typescript-eslint': tseslintPlugin,
             react: pluginReact,
+            prettier: prettierPlugin,
         },
-    },
-    {
         rules: {
-            'no-unused-vars': 'error',
+            // switch off default
+            'no-unused-vars': 'off',
+
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    argsIgnorePattern: '^_',
+                    varsIgnorePattern: '^_',
+                },
+            ],
+
             'no-undef': 'error',
             'no-console': 'warn',
             eqeqeq: 'error',
@@ -50,12 +59,7 @@ module.exports = [
             'no-shadow': 'error',
             'consistent-return': 'error',
             'max-lines': ['warn', 300],
-            '@typescript-eslint/no-explicit-any': 'off',
-        },
-    },
-    {
-        rules: {
-            '@typescript-eslint/no-unused-vars': ['error'],
+
             '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/explicit-module-boundary-types': 'off',
             '@typescript-eslint/no-non-null-assertion': 'error',
@@ -70,15 +74,7 @@ module.exports = [
                 },
             ],
             '@typescript-eslint/explicit-function-return-type': 'off',
-        },
-    },
-    {
-        settings: {
-            react: {
-                version: 'detect',
-            },
-        },
-        rules: {
+
             'react/jsx-uses-react': 'error',
             'react/jsx-uses-vars': 'error',
             'react/react-in-jsx-scope': 'off',
@@ -88,15 +84,15 @@ module.exports = [
             'react/jsx-no-undef': 'error',
             'react/no-deprecated': 'warn',
             'react/jsx-max-props-per-line': ['error', { maximum: 3 }],
+
+            // prettier
+            'prettier/prettier': 'error',
+        },
+        settings: {
+            react: {
+                version: 'detect',
+            },
         },
     },
     prettierConfig,
-    {
-        rules: {
-            'prettier/prettier': 'error',
-        },
-        plugins: {
-            prettier: prettierPlugin,
-        },
-    },
 ];

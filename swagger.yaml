@@ -1,0 +1,146 @@
+openapi: 3.0.0
+info:
+  title: Toys Store
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080/api/v1/
+    description: Dev server
+  - url: http://localhost:8081/api/v2/
+    description: Stage server
+  - url: http://localhost:8082/api/v3/
+    description: Prod server
+paths: 
+  /toys:
+    get:
+      summary: Toys GET method (READ)
+      tags: 
+        - Toys
+      operationId: getAllToys
+      responses:
+        '200':
+          description: Successful responses with all toys
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Toys"
+        'default':
+          description: All bad cases
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Toys POST method (CREATE)
+      tags:
+        - Toys
+      operationId: createToy
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Toy"
+      responses:
+        '200':
+          description: Toy was successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Toy"
+        'default':
+          description: Toys wasn't created
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /toys{toy_id}:
+    get:
+      summary: Toy GET method by ID
+      tags:
+        - Toys
+      operationId: getToyById
+      parameters:
+        - name: toy_id
+          in: path
+          required: true
+          description: Toy ID
+          schema:
+            type: string
+          example: DuI_qsMu202-KcWux14KbQ
+      responses:
+        '200':
+          description: Successful response with toy by its ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Toy"
+        'default':
+          description: Toy is not founded
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Toy DELETE method by ID
+      tags:
+        - Toys
+      operationId: deleteToyById
+      parameters:
+        - name: toy_id
+          in: path
+          required: true
+          description: Toy ID
+          schema:
+            type: string
+            example: k1zT420TA0K5kHq_V-fDSg
+      responses:
+        '200':
+          description: Toy was successfully deleted
+          content:
+            application/json: {}
+        'default':
+          description: Toy is not deleted
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Toy:
+      type: object
+      required:
+        - name
+        - status
+      properties:
+        toy_id:
+          type: string
+          example: 6TNrvEwC10W2Bc3z59m1Hg
+        name: 
+          type: string
+          example: Train
+        status:
+          type: string
+          enum: 
+            - new
+            - old
+            - broken
+          description: Toy's state
+        created_at: 
+          type: string
+          format: date-time
+          example: 2025-08-28T06:06:49.456Z
+    Toys:
+      type: array
+      items:
+        $ref: "#/components/schemas/Toy"
+    Error:
+      type: object
+      required:
+        - code
+        - name
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
