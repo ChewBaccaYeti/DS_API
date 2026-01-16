@@ -1,0 +1,267 @@
+openapi: 3.0.0
+info:
+  title: USG Ishimura crew Store
+  version: 0.2.0
+  description: API for accessing crew member data from the CEC crew database on the USG Ishimura.
+  contact:
+    name: CEC API Support
+    url: http://cec-support.example.com
+servers:
+  - url: http://localhost:3000/
+    description: USG Ishimura Main Server (IshimuraDB - MONGO_AEGIS)
+  - url: http://localhost:{port}/
+    description: Bridge Server (server.ts - MONGO_CEC, APP_PORT)
+    variables:
+      port:
+        default: '8080'
+        description: Port configured via APP_PORT environment variable
+paths: 
+  /miners:
+    get:
+      summary: Get all miners from CEC crew database
+      tags:
+        - CEC Crew
+      operationId: getAllMiners
+      responses:
+        '200':
+          description: Successful response with all miners
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrewMembers"
+        '500':
+          description: Error occurred while fetching miners (from controller) or Error acquired during miners data fetching override (from IshimuraDB)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '503':
+          description: MongoDB not connected
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /engineers:
+    get:
+      summary: Get all engineers from CEC crew database
+      tags:
+        - CEC Crew
+      operationId: getAllEngineers
+      responses:
+        '200':
+          description: Successful response with all engineers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrewMembers"
+        '500':
+          description: Error occurred while fetching engineers (from controller) or Error acquired during engineers data fetching override (from IshimuraDB)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '503':
+          description: MongoDB not connected
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /scientists:
+    get:
+      summary: Get all scientists from CEC crew database
+      tags:
+        - CEC Crew
+      operationId: getAllScientists
+      responses:
+        '200':
+          description: Successful response with all scientists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrewMembers"
+        '500':
+          description: Error occurred while fetching scientists (from controller) or Error acquired during scientists data fetching override (from IshimuraDB)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '503':
+          description: MongoDB not connected
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    CrewMember:
+      type: object
+      required:
+        - name
+        - id
+        - rank
+        - role
+        - species
+        - citizenship
+        - directive
+        - experience
+        - activeStatus
+      properties:
+        _id:
+          type: string
+          description: MongoDB ObjectId
+          example: 507f1f77bcf86cd799439011
+        id:
+          type: string
+          description: Crew member execution ID
+          example: CEC-M-001
+        name:
+          type: string
+          description: Crew member full name
+          example: Isaac Clarke
+        rank:
+          type: string
+          description: Military/Corporate rank
+          example: Senior Engineer
+        role:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Role name
+              example: Ship Engineer
+            symbol:
+              type: string
+              description: Role symbol
+              example: ⚙️
+          required:
+            - name
+            - symbol
+        avatar:
+          type: string
+          description: Avatar URL or identifier
+          example: /avatars/isaac_clarke.jpg
+        species:
+          type: string
+          description: Species of the crew member
+          example: Human
+        citizenship:
+          type: string
+          description: Planetary citizenship
+          example: Earth Gov
+        directive:
+          type: string
+          description: Current mission directive
+          example: Mining Operations Support
+        birthdate:
+          type: string
+          format: date
+          description: Date of birth
+          example: 2461-06-05
+        experience:
+          type: object
+          properties:
+            years:
+              type: integer
+              description: Years of experience
+              example: 15
+            skills:
+              type: array
+              items:
+                type: string
+              description: List of skills
+              example: ["Engineering", "Ship Maintenance", "Plasma Cutting"]
+          required:
+            - years
+            - skills
+        certifications:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Certification name
+                example: Deep Space Engineering
+              level:
+                type: string
+                description: Certification level
+                example: Advanced
+              issuer:
+                type: string
+                description: Issuing organization
+                example: CEC Training Division
+            required:
+              - name
+              - level
+              - issuer
+          description: Professional certifications
+        equipment:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Equipment name
+                example: Plasma Cutter
+              type:
+                type: string
+                description: Equipment type
+                example: Tool
+              condition:
+                type: string
+                description: Equipment condition
+                example: Operational
+            required:
+              - name
+              - type
+              - condition
+          description: Assigned equipment
+        activeStatus:
+          type: boolean
+          description: Whether crew member is currently active
+          example: true
+        lastMission:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Last mission name
+              example: Aegis VII Mining Operation
+            date:
+              type: string
+              format: date
+              description: Mission date
+              example: 2508-10-15
+            status:
+              type: string
+              description: Mission completion status
+              example: Completed
+          description: Last mission information
+    CrewMembers:
+      type: array
+      items:
+        $ref: "#/components/schemas/CrewMember"
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Error message describing what went wrong
+          example: "Error occurred while fetching miners."
+        code:
+          type: integer
+          description: HTTP status code
+          example: 500
+        timestamp:
+          type: string
+          format: date-time
+          description: When the error occurred
+          example: "2026-01-16T10:30:00.000Z"
+        endpoint:
+          type: string
+          description: The API endpoint that generated the error
+          example: "/miners"
