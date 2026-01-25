@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Miners from './ships/USG_Ishimura/crew/components/Miners';
 import Engineers from './ships/USG_Ishimura/crew/components/Engineers';
 import Scientists from './ships/USG_Ishimura/crew/components/Scientists';
+import BlinkingAsciiDots from '../ASCII_BG';
 
 const Hub: React.FC = () => {
     const [isRaw, setIsRaw] = React.useState(false);
@@ -12,8 +13,18 @@ const Hub: React.FC = () => {
     };
     return (
         <Router>
-            <div id="hub">
-                <div className="crew">
+            <div id="hub" style={{ position: 'relative', minHeight: '100vh' }}>
+                {/* ASCII Background Animation */}
+                <BlinkingAsciiDots 
+                    backgroundColor="#0d0d1b"
+                    textColor="240, 240, 240"
+                    density={1.2}
+                    animationSpeed={0.5}
+                    removeWaveLine={true}
+                />
+                
+                {/* Main Content */}
+                <div className="crew" style={{ position: 'relative', zIndex: 10 }}>
                     <h1>Concordance Extraction Corporation</h1>
                     <button className="toggle-raw__btn" onClick={toggleRaw}>
                         {isRaw ? 'Show Styled Data' : 'Show Raw Data'}
