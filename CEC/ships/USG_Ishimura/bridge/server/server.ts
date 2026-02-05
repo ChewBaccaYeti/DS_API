@@ -1,11 +1,27 @@
 require('dotenv').config({ path: '.env' });
 
+import { createLogger, format, transports } from "winston";
+import winstonDevConsole from "@epegzz/winston-dev-console";
+import util from "util";
+
 import mongoose from 'mongoose';
 import pipe from '../pipe/pipe';
 
 import { getMiners } from '../../crew/controllers/miner.controller';
 import { getEngineers } from '../../crew/controllers/engineer.controller';
 import { getScientists } from '../../crew/controllers/scientist.controller';
+
+let log = createLogger({
+    level: "silly",
+});
+
+log = winstonDevConsole.init(log);
+log.add(
+    winstonDevConsole.transport({
+        showTimestamps: false,
+        addLineSeparation: true,
+    })
+);
 
 const username = process.env.MONGO_CEC_ADMIN;
 const password = process.env.MONGO_CEC_PASS;
@@ -33,11 +49,11 @@ mongoose
         await logAllData();
 
         app.listen(port, () => {
-            console.log(`Server running at http://localhost:${port}`);
+            log.info(`Server running at http://localhost:${port}`);
         });
     })
     .catch((error: Error) => {
-        console.error('MongoDB connection error:', error);
+        log.error('MongoDB connection error:', error);
     });
 
 async function logAllData() {
@@ -46,15 +62,35 @@ async function logAllData() {
         const engineers = await getEngineers();
         const scientists = await getScientists();
 
-        console.log('\n--- Miners Data ---');
-        console.log(miners);
+        log.silly('\n═══════════════════════════════════════ CREW DATA SUMMARY ═══════════════════════════════════════');
 
-        console.log('\n--- Engineers Data ---');
-        console.log(engineers);
+        log.info('\n🔧 MINERS DATA:');
+        log.verbose(util.inspect(miners, { 
+            colors: true, 
+            depth: 3, 
+            compact: false,
+            breakLength: 80 
+        }));
 
-        console.log('\n--- Scientists Data ---');
-        console.log(scientists);
+        log.info('\n⚙️  ENGINEERS DATA:');
+        log.verbose(util.inspect(engineers, { 
+            colors: true, 
+            depth: 3, 
+            compact: false,
+            breakLength: 80 
+        }));
+
+        log.info('\n🧪 SCIENTISTS DATA:');
+        log.verbose(util.inspect(scientists, { 
+            colors: true, 
+            depth: 3, 
+            compact: false,
+            breakLength: 80 
+        }));
+
+        log.silly('\n═══════════════════════════════════════ END OF CREW DATA SUMMARY ═══════════════════════════════════════');
+
     } catch (error) {
-        console.error('Error during data fetching:', error);
+        log.error('Error during data fetching:', error);
     }
 }
