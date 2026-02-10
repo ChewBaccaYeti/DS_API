@@ -56,7 +56,7 @@ flowchart TB
     end
 ```
 
-### entityRelations
+entityRelations
 
 ```mermaid
 erDiagram
@@ -113,7 +113,7 @@ erDiagram
     }
 ```
 
-## `Below you can find default description of CRA`
+`Below you can find default description of CRA`
 
 ## Getting Started with Create React App
 

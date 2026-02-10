@@ -1,4 +1,4 @@
-const { browser } = require('globals');
+const { browser, node } = require('globals');
 const tseslintPlugin = require('@typescript-eslint/eslint-plugin');
 const tsParser = require('@typescript-eslint/parser');
 const pluginReact = require('eslint-plugin-react');
@@ -11,6 +11,7 @@ module.exports = [
         languageOptions: {
             globals: {
                 ...browser,
+                ...node,
             },
             parser: tsParser,
             parserOptions: {
@@ -21,11 +22,6 @@ module.exports = [
                     jsx: true,
                 },
             },
-        },
-        env: {
-            browser: true,
-            node: true,
-            es6: true,
         },
         plugins: {
             '@typescript-eslint': tseslintPlugin,
