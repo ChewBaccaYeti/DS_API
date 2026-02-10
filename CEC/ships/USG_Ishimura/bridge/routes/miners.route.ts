@@ -4,8 +4,7 @@ import { getMiners } from '../../crew/controllers/miner.controller';
 const router = Router();
 
 router.get('/miners', async (req, res) => {
-    const minersData = await getMiners();
-    res.json(minersData);
+    await getMiners(req, res);
 });
 
 export default router;

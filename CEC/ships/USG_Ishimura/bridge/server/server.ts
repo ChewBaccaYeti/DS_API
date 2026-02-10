@@ -29,8 +29,6 @@ const connection = process.env.MONGO_CEC_CONN;
 const database = process.env.MONGO_CEC_DB;
 const port = process.env.APP_PORT;
 
-const app = pipe();
-
 if (!username || !password || !connection || !database) {
     throw new Error(
         'One or more MongoDB connection environment variables are undefined',
@@ -47,6 +45,8 @@ mongoose
         console.log('Fetching and logging crew data...');
 
         await logAllData();
+
+        const app = pipe();
 
         app.listen(port, () => {
             log.info(`Server running at http://localhost:${port}`);

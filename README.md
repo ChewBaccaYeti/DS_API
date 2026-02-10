@@ -1,8 +1,10 @@
-# This App is dedicated to Dead Space video-game series. Realized as API of characters and few ships from CEC. Based on JS, React, MongoDB and use mongoose as NoSQL for Mongo itself
+# API structure
+
+[![DS API CI/CD CodeQL Analyze][![CodeQL Advanced](https://github.com/ChewBaccaYeti/DS_API/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/ChewBaccaYeti/DS_API/actions/workflows/codeql.yml)]
 
 ## Architecture
 
-### Flow Process
+Flow Process
 
 ```mermaid
 flowchart TB
@@ -111,7 +113,7 @@ erDiagram
     }
 ```
 
-## Below you can find default description of CRA
+## `Below you can find default description of CRA`
 
 ## Getting Started with Create React App
 

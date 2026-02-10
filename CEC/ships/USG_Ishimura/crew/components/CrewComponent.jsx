@@ -22,12 +22,12 @@ function CrewComponent({ isRaw, fetchCrew, title, crewType, emoji }) {
     const handleSortByRank = useCallback(() => {
         setCrew(currentCrew => [...sortByRank(currentCrew, sortRank)]);
         setRank(prev => (prev === 'asc' ? 'desc' : 'asc'));
-    }, [crew, sortRank]);
+    }, [sortRank]);
 
     const handleSortByExp = useCallback(() => {
         setCrew(currentCrew => [...sortByExp(currentCrew, sortExp)]);
         setExp(prev => (prev === 'asc' ? 'desc' : 'asc'));
-    }, [crew, sortExp]);
+    }, [sortExp]);
 
     const renderCrewMember = member => (
         <div key={member.id} className={crewType.slice(0, -1)}>

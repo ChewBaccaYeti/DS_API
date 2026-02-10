@@ -1,6 +1,7 @@
 export default async function fetchScientists() {
     try {
-        const res = await fetch('http://localhost:3842/scientists');
+        const res = await fetch('/api/scientists');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const scientists = await res.json();
         return scientists;
     } catch (err) {
