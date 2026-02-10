@@ -1,4 +1,119 @@
-# Getting Started with Create React App
+# This App is dedicated to Dead Space video-game series. Realized as API of characters and few ships from CEC. Based on JS, React, MongoDB and use mongoose as NoSQL for Mongo itself
+
+## Architecture
+
+### Flow Process
+
+```mermaid
+flowchart TB
+    subgraph startup [Server Startup]
+        dotenv[dotenv.config] -->|loads| envVars[".env vars <br/> ADMIN, PASS, CONN, DB, PORT"]
+        envVars -->|validates| check{vars defined?}
+        check -->|no| throw[throw Error]
+        check -->|yes| mongoConnect
+    end
+
+    subgraph connection [MongoDB Connection]
+        mongoConnect[mongoose.connect <br/> mongodb+srv://] -->|.then| success[Connection successful]
+        mongoConnect -->|.catch| fail[Log error]
+        success -->|await| logAllData[logAllData]
+    end
+
+    subgraph fetching [Fetching Crew Data]
+        logAllData -->|getMiners| miners[Miner.find]
+        logAllData -->|getEngineers| engineers[Engineer.find]
+        logAllData -->|getScientists| scientists[Scientist.find]
+        miners --> log[Winston log <br/> Crew Data Summary]
+        engineers --> log
+        scientists --> log
+    end
+
+    subgraph pipeline [Express Pipeline]
+        log -->|app.listen| server[Server on PORT]
+        server --> pipe[pipe / Express]
+        pipe --> helmet[Helmet / Security]
+        pipe --> cors[CORS]
+        pipe --> rateLimit[Rate Limiter]
+        pipe --> compression[Compression]
+        pipe --> router["/api Router"]
+    end
+
+    subgraph routes [API Routes]
+        router --> minersRoute[GET /api/miners]
+        router --> engineersRoute[GET /api/engineers]
+        router --> scientistsRoute[GET /api/scientists]
+    end
+
+    subgraph frontend ["Frontend / Hub.tsx"]
+        hub[Hub Component] --> navMiners["/miners"]
+        hub --> navEngineers["/engineers"]
+        hub --> navScientists["/scientists"]
+        navMiners -->|fetch| minersRoute
+        navEngineers -->|fetch| engineersRoute
+        navScientists -->|fetch| scientistsRoute
+    end
+```
+
+### entityRelations
+
+```mermaid
+erDiagram
+    ENGINEER }|--|| CEC_SCHEMA : "uses"
+    MINER }|--|| CEC_SCHEMA : "uses"
+    SCIENTIST }|--|| CEC_SCHEMA : "uses"
+
+    CEC_SCHEMA ||--o{ CERTIFICATION : "has"
+    CEC_SCHEMA ||--o{ EQUIPMENT : "carries"
+    CEC_SCHEMA ||--o{ LAST_MISSION : "completed"
+    CEC_SCHEMA ||--|| ROLE : "assigned"
+    CEC_SCHEMA ||--|| EXPERIENCE : "accumulated"
+
+    CEC_SCHEMA {
+        string name "required"
+        string avatar "required"
+        string species "required"
+        string citizenship "required"
+        number rank "required, min: 0"
+        string directive "required"
+        string id "required"
+        date birthdate "required"
+        boolean activeStatus "required"
+    }
+    ROLE {
+        string name "required"
+        string symbol "required"
+    }
+    EXPERIENCE {
+        number years "required"
+        stringArray skills "required"
+    }
+    CERTIFICATION {
+        string title "required"
+        date dateObtained "required"
+    }
+    EQUIPMENT {
+        string name "required"
+        string type "required"
+        date acquired "required"
+    }
+    LAST_MISSION {
+        string missionName
+        date completedDate
+    }
+    ENGINEER {
+        string collection "Engineers"
+    }
+    MINER {
+        string collection "Miners"
+    }
+    SCIENTIST {
+        string collection "Scientists"
+    }
+```
+
+## Below you can find default description of CRA
+
+## Getting Started with Create React App
 
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
