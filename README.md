@@ -1,6 +1,6 @@
 # API structure
 
-[![DS API CI/CD CodeQL Analyze][![CodeQL Advanced](https://github.com/ChewBaccaYeti/DS_API/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/ChewBaccaYeti/DS_API/actions/workflows/codeql.yml)]
+[![CodeQL Advanced](https://github.com/ChewBaccaYeti/DS_API/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/ChewBaccaYeti/DS_API/actions/workflows/codeql.yml)
 
 ## Architecture
 
