@@ -9,7 +9,7 @@ function Miners({ isRaw }) {
             fetchCrew={fetchMiners}
             title="Mining Deck"
             crewType="miners"
-            emoji="⚒️"
+            emoji="⚒︎"
         />
     );
 }

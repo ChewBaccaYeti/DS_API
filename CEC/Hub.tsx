@@ -1,8 +1,15 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link,
+    Navigate,
+} from 'react-router-dom';
 import Miners from './ships/USG_Ishimura/crew/components/Miners';
 import Engineers from './ships/USG_Ishimura/crew/components/Engineers';
 import Scientists from './ships/USG_Ishimura/crew/components/Scientists';
+import CrosshairCursor from './ships/USG_Ishimura/crew/components/CrosshairCursor';
 import BlinkingAsciiDots from '../ASCII_BG';
 
 const Hub: React.FC = () => {
@@ -13,18 +20,21 @@ const Hub: React.FC = () => {
     };
     return (
         <Router>
+            <CrosshairCursor />
             <div id="hub" style={{ position: 'relative', minHeight: '100vh' }}>
                 {/* ASCII Background Animation */}
-                <BlinkingAsciiDots 
+                <BlinkingAsciiDots
                     backgroundColor="#0d0d1b"
                     textColor="240, 240, 240"
                     density={1.2}
                     animationSpeed={0.5}
                     removeWaveLine={true}
                 />
-                
+
                 {/* Main Content */}
-                <div className="crew" style={{ position: 'relative', zIndex: 10 }}>
+                <div
+                    className="crew"
+                    style={{ position: 'relative', zIndex: 10 }}>
                     <h1>Concordance Extraction Corporation</h1>
                     <button className="toggle-raw__btn" onClick={toggleRaw}>
                         {isRaw ? 'Show Styled Data' : 'Show Raw Data'}
@@ -38,18 +48,22 @@ const Hub: React.FC = () => {
                             </li>
                             <li className="nav-list__item">
                                 <button className="nav-list__btn">
-                                    <Link to="/engineers">Engineers ⚙️</Link>
+                                    <Link to="/engineers">Engineers ⚙︎</Link>
                                 </button>
                             </li>
                             <li className="nav-list__item">
                                 <button className="nav-list__btn">
-                                    <Link to="/scientists">Scientists 🔬</Link>
+                                    <Link to="/scientists">Scientists ⚗︎</Link>
                                 </button>
                             </li>
                         </ul>
                     </nav>
                     <div className="routes">
                         <Routes>
+                            <Route
+                                path="/"
+                                element={<Navigate to="/miners" replace />}
+                            />
                             <Route
                                 path="/miners"
                                 element={<Miners isRaw={isRaw} />}

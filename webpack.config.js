@@ -37,6 +37,12 @@ module.exports = {
         static: {
             directory: path.join(__dirname, './CEC/public'),
         },
+        proxy: [
+            {
+                context: ["/api"],
+                target: `http://localhost:${process.env.APP_PORT}`,
+            },
+        ],
         historyApiFallback: true,
         port: process.env.SERVER_PORT,
         open: true,

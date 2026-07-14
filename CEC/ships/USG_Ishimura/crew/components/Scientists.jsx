@@ -9,7 +9,7 @@ function Scientists({ isRaw }) {
             fetchCrew={fetchScientists}
             title="Medical Bay"
             crewType="scientists"
-            emoji="🔬"
+            emoji="⚗︎"
         />
     );
 }

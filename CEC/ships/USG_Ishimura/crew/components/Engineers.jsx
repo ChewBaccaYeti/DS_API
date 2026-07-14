@@ -9,7 +9,7 @@ function Engineers({ isRaw }) {
             fetchCrew={fetchEngineers}
             title="Engineering"
             crewType="engineers"
-            emoji="⚙️"
+            emoji="⚙︎"
         />
     );
 }
