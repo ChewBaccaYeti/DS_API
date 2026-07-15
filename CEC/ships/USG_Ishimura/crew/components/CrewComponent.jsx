@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import DOMPurify from 'dompurify';
 import {
     renderCertifications,
@@ -9,28 +9,58 @@ import {
     sortByExp,
     SortButtons,
 } from '../scripts/helpers/sorters.js';
+import { useCrew } from '../hooks/useCrew';
+import { CrewSkeleton } from './ui/CrewSkeleton';
+import { ErrorState } from './ui/ErrorState';
 
-function CrewComponent({ isRaw, fetchCrew, title, crewType, emoji }) {
-    const [crew, setCrew] = useState([]);
+const ACCENTS = {
+    miners: '#ffb03b',
+    engineers: '#4dd0e1',
+    scientists: '#c8102e',
+};
+
+function CrewComponent({ isRaw, role, title, crewType, emoji }) {
+    const { data, isLoading, isError, error, refetch, isFetching } = useCrew(
+        role,
+        { page: 1, limit: 50 },
+    );
+
+    const items = data?.items ?? [];
+    const accent = ACCENTS[role] ?? '#4dd0e1';
+
     const [sortRank, setRank] = useState('asc');
     const [sortExp, setExp] = useState('asc');
 
-    useEffect(() => {
-        fetchCrew().then(data => setCrew(data || []));
-    }, [fetchCrew]);
+    const sortedCrew = useMemo(() => {
+        let list = items;
+        list = sortByRank(list, sortRank);
+        list = sortByExp(list, sortExp);
+        return list;
+    }, [items, sortRank, sortExp]);
 
     const handleSortByRank = useCallback(() => {
-        setCrew(currentCrew => [...sortByRank(currentCrew, sortRank)]);
         setRank(prev => (prev === 'asc' ? 'desc' : 'asc'));
-    }, [sortRank]);
+    }, []);
 
     const handleSortByExp = useCallback(() => {
-        setCrew(currentCrew => [...sortByExp(currentCrew, sortExp)]);
         setExp(prev => (prev === 'asc' ? 'desc' : 'asc'));
-    }, [sortExp]);
+    }, []);
+
+    if (isError) {
+        return (
+            <div id={crewType}>
+                <h2>{`Welcome to ${title} ${emoji}`}</h2>
+                <ErrorState
+                    error={error}
+                    onRetry={refetch}
+                    accentColor={accent}
+                />
+            </div>
+        );
+    }
 
     const renderCrewMember = member => (
-        <div key={member.id} className={crewType.slice(0, -1)}>
+        <div key={member._id || member.id} className={crewType.slice(0, -1)}>
             <h3>{member.name}</h3>
             <ul>
                 <li>
@@ -87,7 +117,7 @@ function CrewComponent({ isRaw, fetchCrew, title, crewType, emoji }) {
             <ul
                 dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(
-                        renderCertifications(member.certifications)
+                        renderCertifications(member.certifications),
                     ),
                 }}
             />
@@ -95,7 +125,9 @@ function CrewComponent({ isRaw, fetchCrew, title, crewType, emoji }) {
             <h4>Equipment:</h4>
             <ul
                 dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(renderEquipment(member.equipment)),
+                    __html: DOMPurify.sanitize(
+                        renderEquipment(member.equipment),
+                    ),
                 }}
             />
         </div>
@@ -104,16 +136,18 @@ function CrewComponent({ isRaw, fetchCrew, title, crewType, emoji }) {
     return (
         <div id={crewType}>
             <h2>{`Welcome to ${title} ${emoji}`}</h2>
-            {isRaw ? (
+            {isLoading ? (
+                <CrewSkeleton count={6} accentColor={accent} />
+            ) : isRaw ? (
                 <div className="raw-data">
-                    {crew.length > 0 ? (
-                        crew.map((member, index) => (
+                    {sortedCrew.length > 0 ? (
+                        sortedCrew.map((member, index) => (
                             <div key={index} className="raw-data__object">
                                 <pre>{JSON.stringify(member, null, 2)}</pre>
                             </div>
                         ))
                     ) : (
-                        <p className="loading">{`Loading ${title} ${emoji}...`}</p>
+                        <p className="loading">{`No ${title} data ${emoji}`}</p>
                     )}
                 </div>
             ) : (
@@ -125,12 +159,19 @@ function CrewComponent({ isRaw, fetchCrew, title, crewType, emoji }) {
                         onSortByExp={handleSortByExp}
                     />
                     <div className={`${crewType}-grid`}>
-                        {crew.length > 0 ? (
-                            crew.map(renderCrewMember)
+                        {sortedCrew.length > 0 ? (
+                            sortedCrew.map(renderCrewMember)
                         ) : (
-                            <p className="loading">{`Loading ${title} ${emoji}...`}</p>
+                            <p className="loading">{`No ${title} data ${emoji}`}</p>
                         )}
                     </div>
+                    {isFetching && (
+                        <p
+                            className="loading"
+                            style={{ marginTop: 12, fontSize: 12 }}>
+                            Refreshing telemetry…
+                        </p>
+                    )}
                 </>
             )}
         </div>

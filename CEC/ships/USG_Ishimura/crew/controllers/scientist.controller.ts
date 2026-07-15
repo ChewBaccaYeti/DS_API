@@ -1,18 +1,16 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import Scientist from '../models/scientist.model';
+import { paginate } from '../../bridge/utils/pagination';
 
-export const getScientists = async (req?: Request, res?: Response) => {
+export async function getScientists(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> {
     try {
-        const scientistsData = await Scientist.find();
-        if (res) {
-            res.json(scientistsData);
-        }
-        return scientistsData;
+        const result = await paginate(Scientist, req);
+        res.json(result);
     } catch (error) {
-        if (res) {
-            res.status(500).send('Error occurred while fetching scientists.');
-        }
-        console.error(error);
-        return [];
+        next(error);
     }
-};
+}

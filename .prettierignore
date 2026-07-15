@@ -1,0 +1,16 @@
+# Build output
+CEC/archive/
+dist/
+coverage/
+
+# Generated
+CEC/styles/styles.css
+CEC/styles/styles.css.map
+Ishimura_crew_rotation.mmd
+
+# Deps
+node_modules/
+package-lock.json
+
+# GitHub metadata files that must keep their exact syntax
+.github/CODEOWNERS

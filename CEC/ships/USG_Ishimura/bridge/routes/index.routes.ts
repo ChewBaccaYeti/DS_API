@@ -2,21 +2,33 @@ import { Router } from 'express';
 import minersRoutes from './miners.route';
 import engineersRoutes from './engineers.route';
 import scientistsRoutes from './scientists.route';
+import healthRoutes from './health.route';
+import docsRoutes from './docs.route';
+import rotationsRoutes from './rotations.route';
 
 const router = Router();
 
-// Main route
-router.get('/', (req, res) => {
-    res.send(
-        'Hello, World! ' +
-            'You must be looking for the Mining Deck. Go to the `/miners` endpoint. ' +
-            'If you are looking for the Engineer Deck, go to the `/engineers` endpoint. ' +
-            'If you need Medical Bay, go to `/scientists` endpoint.',
-    );
+router.get('/', (_req, res) => {
+    res.json({
+        service: 'USG Ishimura Bridge API',
+        endpoints: [
+            '/api/health',
+            '/api/docs',
+            '/api/openapi.json',
+            '/api/miners',
+            '/api/engineers',
+            '/api/scientists',
+            '/api/rotations',
+            '/api/rotations/mermaid',
+        ],
+    });
 });
 
+router.use(healthRoutes);
+router.use(docsRoutes);
 router.use(minersRoutes);
 router.use(engineersRoutes);
 router.use(scientistsRoutes);
+router.use(rotationsRoutes);
 
 export default router;

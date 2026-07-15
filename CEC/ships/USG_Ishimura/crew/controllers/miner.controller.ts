@@ -1,18 +1,16 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import Miner from '../models/miner.model';
+import { paginate } from '../../bridge/utils/pagination';
 
-export const getMiners = async (req?: Request, res?: Response) => {
+export async function getMiners(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> {
     try {
-        const minersData = await Miner.find();
-        if (res) {
-            res.json(minersData);
-        }
-        return minersData;
+        const result = await paginate(Miner, req);
+        res.json(result);
     } catch (error) {
-        if (res) {
-            res.status(500).send('Error occurred while fetching miners.');
-        }
-        console.error(error);
-        return [];
+        next(error);
     }
-};
+}

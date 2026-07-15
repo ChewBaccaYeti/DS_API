@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+@source '../**/*.{js,jsx,ts,tsx,html}';
+@source '../../ASCII_BG.tsx';
+
+@theme {
+    --color-bg-void: #05070a;
+    --color-bg-hull: #0d1218;
+    --color-bg-panel: #161c24;
+    --color-metal: #262d38;
+    --color-metal-lit: #3a424f;
+    --color-rig-cyan: #4dd0e1;
+    --color-hud-glow: #7fe9ff;
+    --color-text-bright: #d7e6ef;
+    --color-text-dim: #8ea2b0;
+    --color-text-muted: #5a6b78;
+    --color-miner-amber: #ffb03b;
+    --color-engineer-cyan: #4dd0e1;
+    --color-scientist-crimson: #c8102e;
+    --color-blood-rust: #7a1414;
+
+    --font-ui: 'Chakra Petch', 'Segoe UI', sans-serif;
+    --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+    --font-display: 'Orbitron', 'Chakra Petch', sans-serif;
+}

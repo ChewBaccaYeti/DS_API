@@ -1,0 +1,27 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "target": "ES2020",
+        "lib": ["ES2020"],
+        "jsx": "react-jsx",
+        "outDir": "CEC/archive",
+        "rootDir": "CEC",
+        "noEmit": false,
+        "declaration": false,
+        "sourceMap": false,
+        "types": ["node"]
+    },
+    "include": ["CEC/**/*.ts"],
+    "exclude": [
+        "node_modules",
+        "CEC/archive",
+        "CEC/**/*.tsx",
+        "CEC/Hub.tsx",
+        "CEC/ASCII_BG.tsx",
+        "CEC/lib",
+        "CEC/ships/USG_Ishimura/crew/hooks",
+        "scripts"
+    ]
+}

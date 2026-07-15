@@ -1,4 +1,4 @@
-import React from 'react';
+import { Suspense, lazy, useState, type FC } from 'react';
 import {
     BrowserRouter as Router,
     Routes,
@@ -6,14 +6,35 @@ import {
     Link,
     Navigate,
 } from 'react-router-dom';
-import Miners from './ships/USG_Ishimura/crew/components/Miners';
-import Engineers from './ships/USG_Ishimura/crew/components/Engineers';
-import Scientists from './ships/USG_Ishimura/crew/components/Scientists';
 import CrosshairCursor from './ships/USG_Ishimura/crew/components/CrosshairCursor';
-import BlinkingAsciiDots from '../ASCII_BG';
+import BlinkingAsciiDots from './ASCII_BG';
 
-const Hub: React.FC = () => {
-    const [isRaw, setIsRaw] = React.useState(false);
+const Miners = lazy(
+    () => import('./ships/USG_Ishimura/crew/components/Miners'),
+);
+const Engineers = lazy(
+    () => import('./ships/USG_Ishimura/crew/components/Engineers'),
+);
+const Scientists = lazy(
+    () => import('./ships/USG_Ishimura/crew/components/Scientists'),
+);
+const RotationGraph = lazy(
+    () => import('./ships/USG_Ishimura/crew/components/RotationGraph'),
+);
+
+const RouteFallback = () => (
+    <p
+        className="loading"
+        style={{
+            padding: 24,
+            textAlign: 'center',
+        }}>
+        Loading module…
+    </p>
+);
+
+const Hub: FC = () => {
+    const [isRaw, setIsRaw] = useState(false);
 
     const toggleRaw = () => {
         setIsRaw(prevState => !prevState);
@@ -22,7 +43,6 @@ const Hub: React.FC = () => {
         <Router>
             <CrosshairCursor />
             <div id="hub" style={{ position: 'relative', minHeight: '100vh' }}>
-                {/* ASCII Background Animation */}
                 <BlinkingAsciiDots
                     backgroundColor="#0d0d1b"
                     textColor="240, 240, 240"
@@ -31,7 +51,6 @@ const Hub: React.FC = () => {
                     removeWaveLine={true}
                 />
 
-                {/* Main Content */}
                 <div
                     className="crew"
                     style={{ position: 'relative', zIndex: 10 }}>
@@ -56,27 +75,38 @@ const Hub: React.FC = () => {
                                     <Link to="/scientists">Scientists ⚗︎</Link>
                                 </button>
                             </li>
+                            <li className="nav-list__item">
+                                <button className="nav-list__btn">
+                                    <Link to="/rotations">Rotations ⇄</Link>
+                                </button>
+                            </li>
                         </ul>
                     </nav>
                     <div className="routes">
-                        <Routes>
-                            <Route
-                                path="/"
-                                element={<Navigate to="/miners" replace />}
-                            />
-                            <Route
-                                path="/miners"
-                                element={<Miners isRaw={isRaw} />}
-                            />
-                            <Route
-                                path="/engineers"
-                                element={<Engineers isRaw={isRaw} />}
-                            />
-                            <Route
-                                path="/scientists"
-                                element={<Scientists isRaw={isRaw} />}
-                            />
-                        </Routes>
+                        <Suspense fallback={<RouteFallback />}>
+                            <Routes>
+                                <Route
+                                    path="/"
+                                    element={<Navigate to="/miners" replace />}
+                                />
+                                <Route
+                                    path="/miners"
+                                    element={<Miners isRaw={isRaw} />}
+                                />
+                                <Route
+                                    path="/engineers"
+                                    element={<Engineers isRaw={isRaw} />}
+                                />
+                                <Route
+                                    path="/scientists"
+                                    element={<Scientists isRaw={isRaw} />}
+                                />
+                                <Route
+                                    path="/rotations"
+                                    element={<RotationGraph />}
+                                />
+                            </Routes>
+                        </Suspense>
                     </div>
                 </div>
             </div>

@@ -56,7 +56,7 @@
 }
 #hub .crew .toggle-raw__btn {
   all: unset;
-  cursor: pointer;
+  cursor: none;
   margin: 20px 0 24px;
   padding: 10px 24px;
   font-family: "Share Tech Mono", "Courier New", monospace;
@@ -134,7 +134,7 @@
   min-width: 160px;
   height: 44px;
   padding: 0 22px;
-  cursor: pointer;
+  cursor: none;
   font-family: "Chakra Petch", "Segoe UI", sans-serif;
   font-weight: 600;
   font-size: 0.9rem;
@@ -150,6 +150,7 @@
 }
 #hub .navigation .nav-list .nav-list__item .nav-list__btn a {
   color: inherit;
+  cursor: inherit;
   text-decoration: none;
   display: block;
   width: 100%;
@@ -200,7 +201,7 @@
 }
 #hub .sorters .btn-sort {
   all: unset;
-  cursor: pointer;
+  cursor: none;
   padding: 8px 18px;
   font-family: "Share Tech Mono", "Courier New", monospace;
   font-size: 0.8rem;

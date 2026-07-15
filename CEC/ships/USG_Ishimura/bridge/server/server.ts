@@ -1,26 +1,17 @@
 require('dotenv').config({ path: '.env' });
 
-import { createLogger, format, transports } from "winston";
-import winstonDevConsole from "@epegzz/winston-dev-console";
-import util from "util";
-
+import { createLogger } from 'winston';
+import winstonDevConsole from '@epegzz/winston-dev-console';
 import mongoose from 'mongoose';
 import pipe from '../pipe/pipe';
 
-import { getMiners } from '../../crew/controllers/miner.controller';
-import { getEngineers } from '../../crew/controllers/engineer.controller';
-import { getScientists } from '../../crew/controllers/scientist.controller';
-
-let log = createLogger({
-    level: "silly",
-});
-
+let log = createLogger({ level: 'silly' });
 log = winstonDevConsole.init(log);
 log.add(
     winstonDevConsole.transport({
         showTimestamps: false,
         addLineSeparation: true,
-    })
+    }),
 );
 
 const username = process.env.MONGO_CEC_ADMIN;
@@ -39,58 +30,17 @@ mongoose
     .connect(
         `mongodb+srv://${username}:${password}@${connection}.fm1e1.mongodb.net/${database}?retryWrites=true&w=majority&appName=${connection}`,
     )
-    .then(async () => {
-        console.log('MongoDB Connection successful.');
-
-        console.log('Fetching and logging crew data...');
-
-        await logAllData();
+    .then(() => {
+        log.info('MongoDB connection successful.');
 
         const app = pipe();
 
         app.listen(port, () => {
             log.info(`Server running at http://localhost:${port}`);
+            log.info(`API docs at http://localhost:${port}/api/docs`);
+            log.info(`Health at http://localhost:${port}/api/health`);
         });
     })
     .catch((error: Error) => {
         log.error('MongoDB connection error:', error);
     });
-
-async function logAllData() {
-    try {
-        const miners = await getMiners();
-        const engineers = await getEngineers();
-        const scientists = await getScientists();
-
-        log.silly('\n═══════════════════════════════════════ CREW DATA SUMMARY ═══════════════════════════════════════');
-
-        log.info('\n🔧 MINERS DATA:');
-        log.verbose(util.inspect(miners, { 
-            colors: true, 
-            depth: 3, 
-            compact: false,
-            breakLength: 80 
-        }));
-
-        log.info('\n⚙️  ENGINEERS DATA:');
-        log.verbose(util.inspect(engineers, { 
-            colors: true, 
-            depth: 3, 
-            compact: false,
-            breakLength: 80 
-        }));
-
-        log.info('\n🧪 SCIENTISTS DATA:');
-        log.verbose(util.inspect(scientists, { 
-            colors: true, 
-            depth: 3, 
-            compact: false,
-            breakLength: 80 
-        }));
-
-        log.silly('\n═══════════════════════════════════════ END OF CREW DATA SUMMARY ═══════════════════════════════════════');
-
-    } catch (error) {
-        log.error('Error during data fetching:', error);
-    }
-}

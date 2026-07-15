@@ -1,13 +1,16 @@
-/*  
-    MongoDB Atlas 
-    MongoDBCompass / Studio 3T
-    mongoose
-    node.js
-    Typescript
-*/
+/**
+ * Legacy standalone entry point.
+ *
+ * Runs a minimal Express server on port 3000 backed by a separate Mongo
+ * cluster (`MONGO_AEGIS_*`). Kept for the `npm run RIG` script and RIG
+ * diagnostics printouts; the main production flow uses
+ * `bridge/server/server.ts` on `APP_PORT`.
+ */
+
 require('dotenv').config({ path: '.env' });
 export {};
-import express from 'express';
+
+import express, { Request, Response } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import mongoose, { Model } from 'mongoose';
@@ -20,47 +23,69 @@ import { protoMiners } from './crew/models/miner.model';
 import { protoEngineers } from './crew/models/engineer.model';
 import { protoScientists } from './crew/models/scientist.model';
 
+import { CrewMember } from './crew/CEC.interface';
+
+const LEGACY_PORT = 3000;
+
 const app = express();
 const username = process.env.MONGO_AEGIS_ADMIN;
 const password = process.env.MONGO_AEGIS_PASS;
 const database = process.env.MONGO_AEGIS_DB;
 
+if (!username || !password || !database) {
+    throw new Error(
+        'Legacy Aegis env vars missing (MONGO_AEGIS_ADMIN/PASS/DB).',
+    );
+}
+
 app.use(helmet());
 app.use(helmet.hsts());
 app.use(helmet.noSniff());
 app.use(helmet.xssFilter());
-
 app.use(cors({ origin: '*' }));
 
-app.get('/', (req: any, res: any) => {
-    res.send(
-        'Hello, World!' +
-            'You must looking for Mining Deck. Go to the `/miners` endpoint.' +
-            'If you are looking for Engineer Deck - go to the `/engineers` endpoint.' +
-            'If you need Medical Bay - go to /scientists endpoint.',
-    );
+app.get('/', (_req: Request, res: Response) => {
+    res.json({
+        service: 'USG Ishimura Legacy RIG endpoint',
+        endpoints: ['/miners', '/engineers', '/scientists'],
+    });
 });
 
-const createCrewRouteHandler = (model: Model<any>, crewName: string) => {
-    return async (req: any, res: any) => {
+function crewHandler(model: Model<CrewMember>, crewName: string) {
+    return async (_req: Request, res: Response): Promise<void> => {
+        if (mongoose.connection.readyState !== 1) {
+            res.status(503).json({
+                error: {
+                    code: 'DB_UNAVAILABLE',
+                    message: 'MongoDB not connected',
+                },
+                endpoint: `/${crewName}`,
+                status: 503,
+                timestamp: new Date().toISOString(),
+            });
+            return;
+        }
         try {
-            if (mongoose.connection.readyState !== 1) {
-                return res.status(503).send('MongoDB not connected');
-            }
-            const data = await model.find();
+            const data = await model.find().lean<CrewMember[]>();
             res.json(data);
         } catch (error) {
-            res.status(500).send(
-                `Error acquired during ${crewName} data fetching override.`,
-            );
+            res.status(500).json({
+                error: {
+                    code: 'FETCH_FAILED',
+                    message: `Error fetching ${crewName}.`,
+                },
+                endpoint: `/${crewName}`,
+                status: 500,
+                timestamp: new Date().toISOString(),
+            });
             console.error(error);
         }
     };
-};
+}
 
-app.get('/miners', createCrewRouteHandler(Miner, 'miners'));
-app.get('/engineers', createCrewRouteHandler(Engineer, 'engineers'));
-app.get('/scientists', createCrewRouteHandler(Scientist, 'scientists'));
+app.get('/miners', crewHandler(Miner, 'miners'));
+app.get('/engineers', crewHandler(Engineer, 'engineers'));
+app.get('/scientists', crewHandler(Scientist, 'scientists'));
 
 mongoose
     .connect(
@@ -70,12 +95,14 @@ mongoose
         protoMiners();
         protoEngineers();
         protoScientists();
-        console.log('Connection successful.');
-        app.listen(3000, () => {
-            console.log(`Server running at http://localhost:3000`);
+        console.log('[RIG] Legacy Aegis connection successful.');
+        app.listen(LEGACY_PORT, () => {
+            console.log(
+                `[RIG] Legacy server at http://localhost:${LEGACY_PORT}`,
+            );
         });
     })
     .catch((error: Error) => {
-        console.error(error);
+        console.error('[RIG] Legacy connection error:', error);
         process.exit(1);
     });

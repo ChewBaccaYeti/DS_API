@@ -18,13 +18,26 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        presets: [
+                            '@babel/preset-env',
+                            ['@babel/preset-react', { runtime: 'automatic' }],
+                            '@babel/preset-typescript',
+                        ],
                     },
                 },
             },
             {
-                test: /\.(css|scss)$/,
-                use: ['style-loader', 'css-loader', 'sass-loader'],
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader', 'postcss-loader'],
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader',
+                ],
             },
         ],
     },
@@ -39,13 +52,23 @@ module.exports = {
         },
         proxy: [
             {
-                context: ["/api"],
+                context: ['/api'],
                 target: `http://localhost:${process.env.APP_PORT}`,
             },
         ],
         historyApiFallback: true,
         port: process.env.SERVER_PORT,
         open: true,
+        hot: true,
+        liveReload: true,
+        watchFiles: {
+            paths: ['CEC/styles/styles.css'],
+            options: { usePolling: false },
+        },
+        client: {
+            overlay: { errors: true, warnings: false },
+            reconnect: true,
+        },
     },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss'],

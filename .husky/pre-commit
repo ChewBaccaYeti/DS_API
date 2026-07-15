@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# ─── USG Ishimura pre-commit gate ──────────────────────────────────────
+# Blocks the commit if lint or tests fail. Runs lint-staged on staged
+# files first (fast, auto-fixes), then Jest on the whole suite.
+
+echo "🔧 lint-staged on staged files..."
+npx lint-staged || exit 1
+
+echo "🧪 jest suite..."
+npm test --silent || exit 1
+
+echo "✅ pre-commit gate passed"

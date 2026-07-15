@@ -1,14 +1,18 @@
 {
-    "watch": ["CEC/archive/ships/USG_Ishimura/bridge/server/"],
-    "ext": "js",
+    "watch": ["CEC/archive/ships/USG_Ishimura/"],
+    "ext": "js,json",
+    "delay": 300,
     "ignore": [
-        "node_modules/", 
-        ".git/", 
+        "node_modules/",
+        ".git/",
         "index.html",
         "CEC/ships/",
+        "CEC/archive/dist/",
         "*.ts",
+        "*.tsx",
         "*.scss",
-        "*.css"
+        "*.css",
+        "*.map"
     ],
     "execMap": {
         "js": "node",

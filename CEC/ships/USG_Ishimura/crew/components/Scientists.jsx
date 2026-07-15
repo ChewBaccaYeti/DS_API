@@ -1,12 +1,10 @@
-import React from 'react';
 import CrewComponent from './CrewComponent';
-import fetchScientists from '../scripts/fetchers/fetchScientists.js';
 
 function Scientists({ isRaw }) {
     return (
         <CrewComponent
             isRaw={isRaw}
-            fetchCrew={fetchScientists}
+            role="scientists"
             title="Medical Bay"
             crewType="scientists"
             emoji="⚗︎"

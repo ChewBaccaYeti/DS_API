@@ -1,0 +1,27 @@
+# USG Ishimura CEC — Code Owners
+
+# Every path is owned by @ChewBaccaYeti
+
+# GitHub requires a review from this owner on any PR that touches a matched file
+
+# Only the LAST matching line applies for a given path
+
+# Docs: <https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-security/customizing-your-repository/about-code-owners>
+
+# Default owner for the whole repo
+
+* @ChewBaccaYeti
+
+# Explicit ownership for security-sensitive surfaces
+
+/.github/                       @ChewBaccaYeti
+/.github/CODEOWNERS             @ChewBaccaYeti
+/.github/workflows/             @ChewBaccaYeti
+/.husky/                        @ChewBaccaYeti
+/CEC/ships/USG_Ishimura/bridge/ @ChewBaccaYeti
+/package.json                   @ChewBaccaYeti
+/package-lock.json              @ChewBaccaYeti
+/tsconfig.json                  @ChewBaccaYeti
+/tsconfig.build.json            @ChewBaccaYeti
+/eslint.config.js               @ChewBaccaYeti
+/webpack.config.js              @ChewBaccaYeti

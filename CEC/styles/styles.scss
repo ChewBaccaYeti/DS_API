@@ -149,7 +149,7 @@ $border-thin: 1px;
         // ------ Toggle Raw Data button ------
         .toggle-raw__btn {
             all: unset;
-            cursor: pointer;
+            cursor: none;
             margin: 20px 0 24px;
             padding: 10px 24px;
             font-family: $font-mono;
@@ -242,7 +242,7 @@ $border-thin: 1px;
                     min-width: 160px;
                     height: 44px;
                     padding: 0 22px;
-                    cursor: pointer;
+                    cursor: none;
                     font-family: $font-ui;
                     font-weight: 600;
                     font-size: 0.9rem;
@@ -258,6 +258,7 @@ $border-thin: 1px;
 
                     a {
                         color: inherit;
+                        cursor: inherit;
                         text-decoration: none;
                         display: block;
                         width: 100%;
@@ -329,7 +330,7 @@ $border-thin: 1px;
 
         .btn-sort {
             all: unset;
-            cursor: pointer;
+            cursor: none;
             padding: 8px 18px;
             font-family: $font-mono;
             font-size: 0.8rem;

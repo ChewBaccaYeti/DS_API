@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 interface AsciiDotsFullscreenProps {
     backgroundColor?: string;
@@ -258,7 +256,7 @@ const BlinkingAsciiDots = ({
     ]);
 
     useEffect(() => {
-        if (!containerRef.current) return;
+        if (!containerRef.current) return undefined;
 
         handleResize();
 
