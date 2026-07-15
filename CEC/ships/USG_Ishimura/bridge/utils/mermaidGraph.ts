@@ -253,6 +253,7 @@ export function buildRotationMermaid(
     lines.push('config:');
     lines.push('  theme: dark');
     lines.push('  flowchart:');
+    lines.push('    defaultRenderer: elk');
     lines.push('    curve: basis');
     lines.push('    nodeSpacing: 60');
     lines.push('    rankSpacing: 90');
