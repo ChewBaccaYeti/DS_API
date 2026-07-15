@@ -94,6 +94,24 @@ const OFF_DUTY = [
     'Off-duty (Chapel)',
 ];
 
+// ─── Shift grouping (widens the graph horizontally) ────────────────────
+const SHIFT_SIZE = 4;
+const SHIFT_LABELS = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Echo'];
+
+function chunk<T>(arr: T[], size: number): T[][] {
+    const out: T[][] = [];
+    for (let i = 0; i < arr.length; i += size) {
+        out.push(arr.slice(i, i + size));
+    }
+    return out;
+}
+
+const DECK_SUBGRAPH_STYLE: Record<DeckKey, string> = {
+    MINING: 'fill:#120e05,stroke:#8a5f1f,stroke-width:1px,color:#ffb03b',
+    ENG: 'fill:#05121a,stroke:#2a7581,stroke-width:1px,color:#4dd0e1',
+    MED: 'fill:#14060a,stroke:#7a1521,stroke-width:1px,color:#c8102e',
+};
+
 // ─── Deterministic pseudo-random ───────────────────────────────────────
 function hash(input: string): number {
     let h = 2166136261;
@@ -276,15 +294,35 @@ export function buildRotationMermaid(
     }
 
     const edgeStyles: string[] = [];
+    const shiftStyles: string[] = [];
     let edgeIndex = 0;
 
     for (const deck of decks) {
+        const shifts = chunk(deck.members, SHIFT_SIZE);
+
+        // Pass 1: subgraphs with node declarations only (widens layout).
+        shifts.forEach((members, shiftIdx) => {
+            const shiftId = `${deck.key}_SHIFT_${shiftIdx}`;
+            const shiftLabel = SHIFT_LABELS[shiftIdx] ?? `Wave ${shiftIdx + 1}`;
+            lines.push(
+                `    subgraph ${shiftId}["${sanitize(deck.label)} · Shift ${shiftLabel}"]`,
+            );
+            lines.push('        direction TB');
+            for (const m of members) {
+                const nid = nodeId(deck.key, m.id);
+                const inactive = !m.activeStatus ? ' ⚠' : '';
+                const label = `${sanitize(m.name)}${inactive}<br/><i>${sanitize(m.role?.name ?? 'Unassigned')}</i><br/>R${m.rank}`;
+                lines.push(`        ${nid}(["${label}"])`);
+            }
+            lines.push('    end');
+            shiftStyles.push(
+                `    style ${shiftId} ${DECK_SUBGRAPH_STYLE[deck.key]}`,
+            );
+        });
+
+        // Pass 2: deck → crew edges (order defines linkStyle indices).
         for (const m of deck.members) {
             const nid = nodeId(deck.key, m.id);
-            const inactive = !m.activeStatus ? ' ⚠' : '';
-            const label = `${sanitize(m.name)}${inactive}<br/><i>${sanitize(m.role?.name ?? 'Unassigned')}</i><br/>R${m.rank}`;
-            lines.push(`    ${nid}(["${label}"])`);
-
             const assignment = assignFor(deck.key, m, slot.slotIndex);
             assignments.push({
                 crewId: m.id,
@@ -344,6 +382,9 @@ export function buildRotationMermaid(
     lines.push('    style L_MED fill:#1a0a0e,stroke:#c8102e,color:#c8102e');
     lines.push('    style L_OFF fill:#141821,stroke:#5a6b78,color:#8ea2b0');
     lines.push('    style L_CMD fill:#1a1428,stroke:#b47cff,color:#b47cff');
+
+    lines.push('');
+    lines.push(...shiftStyles);
 
     lines.push('');
     lines.push(...edgeStyles);

@@ -168,6 +168,7 @@ minute at [`/rotations`](http://localhost:5376/rotations) in the UI.
 config:
   theme: dark
   flowchart:
+    defaultRenderer: elk
     curve: basis
     nodeSpacing: 60
     rankSpacing: 90
@@ -175,70 +176,97 @@ config:
     htmlLabels: true
 ---
 flowchart LR
-    %% Auto-generated slot 123896 (4h) — 2026-07-15T08:00:00.000Z
+    %% Auto-generated slot 123897 (4h) — 2026-07-15T12:00:00.000Z
     MINING["Mining Deck<br/>Chief: Liam Brown<br/>Rank 7"]
     ENG["Engineering<br/>Chief: Liam Wilson<br/>Rank 5"]
     MED["Medical Bay<br/>Chief: Dr. Luca Icarus<br/>Rank 9"]
-    MINING_MIN_010(["Mia Green<br/><i>Data Analyst</i><br/>R3"])
+    subgraph MINING_SHIFT_0["Mining Deck · Shift Alpha"]
+        direction TB
+        MINING_MIN_010(["Mia Green<br/><i>Data Analyst</i><br/>R3"])
+        MINING_MIN_003(["Alex Johnson<br/><i>Prospector</i><br/>R4"])
+        MINING_MIN_006(["Sophia Lee<br/><i>Field Technician</i><br/>R4"])
+        MINING_MIN_007(["Isabella Martinez<br/><i>Surveyor</i><br/>R6"])
+    end
+    subgraph MINING_SHIFT_1["Mining Deck · Shift Beta"]
+        direction TB
+        MINING_MIN_005(["Liam Brown<br/><i>Safety Officer</i><br/>R7"])
+        MINING_MIN_008(["Oliver Smith<br/><i>Environmental Scientist</i><br/>R5"])
+        MINING_MIN_009(["Ava Thompson<br/><i>Logistics Coordinator</i><br/>R4"])
+        MINING_MIN_002(["Jane Roe ⚠<br/><i>Geologist</i><br/>R3"])
+    end
+    subgraph MINING_SHIFT_2["Mining Deck · Shift Gamma"]
+        direction TB
+        MINING_MIN_004(["Emma Wilson<br/><i>Driller</i><br/>R6"])
+        MINING_MIN_001(["John Doe<br/><i>Miner</i><br/>R5"])
+    end
     MINING --> MINING_MIN_010
-    MINING_MIN_003(["Alex Johnson<br/><i>Prospector</i><br/>R4"])
-    MINING -->|"Blast Zone Command"| MINING_MIN_003
-    MINING_MIN_006(["Sophia Lee<br/><i>Field Technician</i><br/>R4"])
-    MINING -->|"Marker Site Recon"| MINING_MIN_006
-    MINING_MIN_007(["Isabella Martinez<br/><i>Surveyor</i><br/>R6"])
-    MINING -->|"Blast Zone Command"| MINING_MIN_007
-    MINING_MIN_005(["Liam Brown<br/><i>Safety Officer</i><br/>R7"])
-    MINING -->|"Foreman Directive"| MINING_MIN_005
-    MINING_MIN_008(["Oliver Smith<br/><i>Environmental Scientist</i><br/>R5"])
-    MINING -->|"Aegis VII Extraction Ops"| MINING_MIN_008
-    MINING_MIN_009(["Ava Thompson<br/><i>Logistics Coordinator</i><br/>R4"])
-    MINING -->|"Foreman Directive"| MINING_MIN_009
-    MINING_MIN_002(["Jane Roe ⚠<br/><i>Geologist</i><br/>R3"])
+    MINING -->|"Marker Site Recon"| MINING_MIN_003
+    MINING -->|"Off-duty (Sleep Bay)"| MINING_MIN_006
+    MINING -->|"Marker Site Recon"| MINING_MIN_007
+    MINING -->|"Off-duty (Mess Hall)"| MINING_MIN_005
+    MINING -->|"Foreman Directive"| MINING_MIN_008
+    MINING -->|"Off-duty (Mess Hall)"| MINING_MIN_009
     MINING --> MINING_MIN_002
-    MINING_MIN_004(["Emma Wilson<br/><i>Driller</i><br/>R6"])
-    MINING -->|"Aegis VII Extraction Ops"| MINING_MIN_004
-    MINING_MIN_001(["John Doe<br/><i>Miner</i><br/>R5"])
-    MINING -->|"Foreman Directive"| MINING_MIN_001
-    ENG_ENG_009(["James Anderson<br/><i>Quality Assurance Engineer</i><br/>R4"])
-    ENG -->|"Filter Swap"| ENG_ENG_009
-    ENG_ENG_007(["Lucas Johnson<br/><i>Civil Engineer</i><br/>R4"])
-    ENG -->|"Reactor Command"| ENG_ENG_007
-    ENG_ENG_005(["Daniel Perez<br/><i>Software Engineer</i><br/>R3"])
+    MINING -->|"Foreman Directive"| MINING_MIN_004
+    MINING -->|"Aegis VII Extraction Ops"| MINING_MIN_001
+    subgraph ENG_SHIFT_0["Engineering · Shift Alpha"]
+        direction TB
+        ENG_ENG_009(["James Anderson<br/><i>Quality Assurance Engineer</i><br/>R4"])
+        ENG_ENG_007(["Lucas Johnson<br/><i>Civil Engineer</i><br/>R4"])
+        ENG_ENG_005(["Daniel Perez<br/><i>Software Engineer</i><br/>R3"])
+        ENG_ENG_008(["Ava Martinez<br/><i>Systems Engineer</i><br/>R3"])
+    end
+    subgraph ENG_SHIFT_1["Engineering · Shift Beta"]
+        direction TB
+        ENG_ENG_010(["Liam Wilson<br/><i>Mining Engineer</i><br/>R5"])
+        ENG_ENG_003(["Michael Walker<br/><i>Mechanical Engineer</i><br/>R4"])
+        ENG_ENG_002(["Isabella Lewis<br/><i>Structural Engineer</i><br/>R4"])
+        ENG_ENG_001(["David Carter<br/><i>Lead Engineer</i><br/>R5"])
+    end
+    subgraph ENG_SHIFT_2["Engineering · Shift Gamma"]
+        direction TB
+        ENG_ENG_004(["Emma Scott<br/><i>Electrical Engineer</i><br/>R5"])
+        ENG_ENG_006(["Sophia Taylor<br/><i>Chemical Engineer</i><br/>R5"])
+    end
+    ENG -->|"ADS Cannon Ops"| ENG_ENG_009
+    ENG -->|"RIG Diagnostic Sweep"| ENG_ENG_007
     ENG --> ENG_ENG_005
-    ENG_ENG_008(["Ava Martinez<br/><i>Systems Engineer</i><br/>R3"])
     ENG --> ENG_ENG_008
-    ENG_ENG_010(["Liam Wilson<br/><i>Mining Engineer</i><br/>R5"])
-    ENG -->|"Reactor Command"| ENG_ENG_010
-    ENG_ENG_003(["Michael Walker<br/><i>Mechanical Engineer</i><br/>R4"])
-    ENG -->|"Filter Swap"| ENG_ENG_003
-    ENG_ENG_002(["Isabella Lewis<br/><i>Structural Engineer</i><br/>R4"])
-    ENG -->|"RIG Diagnostic Sweep"| ENG_ENG_002
-    ENG_ENG_001(["David Carter<br/><i>Lead Engineer</i><br/>R5"])
-    ENG -->|"Off-duty (Rec Room)"| ENG_ENG_001
-    ENG_ENG_004(["Emma Scott<br/><i>Electrical Engineer</i><br/>R5"])
-    ENG -->|"ADS Cannon Ops"| ENG_ENG_004
-    ENG_ENG_006(["Sophia Taylor<br/><i>Chemical Engineer</i><br/>R5"])
-    ENG -->|"Wiring Patch"| ENG_ENG_006
-    MED_SC_1006(["Dr. Helena Zimri<br/><i>Astrochemist</i><br/>R7"])
-    MED -->|"Marker Bio-Signature Study"| MED_SC_1006
-    MED_SC_1007(["Dr. Fenir Aegis<br/><i>Cyborg Specialist</i><br/>R8"])
-    MED -->|"Outbreak Triage Command"| MED_SC_1007
-    MED_SC_1003(["Dr. Yumi Nagata<br/><i>Geneticist</i><br/>R5"])
-    MED -->|"Outbreak Triage Command"| MED_SC_1003
-    MED_SC_1009(["Dr. Melina Ryker<br/><i>Nanotechnologist</i><br/>R7"])
-    MED -->|"Off-duty (Chapel)"| MED_SC_1009
-    MED_SC_1005(["Dr. Luca Icarus<br/><i>Neuroscientist</i><br/>R9"])
-    MED -->|"Chief Med Consult"| MED_SC_1005
-    MED_SC_1008(["Dr. Ethan Harker<br/><i>Quantum Physicist</i><br/>R6"])
-    MED -->|"Necromorph Autopsy"| MED_SC_1008
-    MED_SC_1001(["Dr. Elara T'Von<br/><i>Xenobiologist</i><br/>R7"])
-    MED -->|"Bio-Waste Purge"| MED_SC_1001
-    MED_SC_1010(["Dr. Karra Thorne<br/><i>Bioengineer</i><br/>R6"])
-    MED -->|"Outbreak Triage Command"| MED_SC_1010
-    MED_SC_1004(["Dr. Samara Wren<br/><i>Medical Doctor</i><br/>R6"])
-    MED -->|"Vitals Round"| MED_SC_1004
-    MED_SC_1002(["Prof. Alrik Voss<br/><i>Astrobiologist</i><br/>R8"])
-    MED -->|"Marker Bio-Signature Study"| MED_SC_1002
+    ENG -->|"Off-duty (Chapel)"| ENG_ENG_010
+    ENG -->|"RIG Diagnostic Sweep"| ENG_ENG_003
+    ENG -->|"Off-duty (Sleep Bay)"| ENG_ENG_002
+    ENG -->|"ADS Cannon Ops"| ENG_ENG_001
+    ENG -->|"Off-duty (Rec Room)"| ENG_ENG_004
+    ENG -->|"Reactor Command"| ENG_ENG_006
+    subgraph MED_SHIFT_0["Medical Bay · Shift Alpha"]
+        direction TB
+        MED_SC_1006(["Dr. Helena Zimri<br/><i>Astrochemist</i><br/>R7"])
+        MED_SC_1007(["Dr. Fenir Aegis<br/><i>Cyborg Specialist</i><br/>R8"])
+        MED_SC_1003(["Dr. Yumi Nagata<br/><i>Geneticist</i><br/>R5"])
+        MED_SC_1009(["Dr. Melina Ryker<br/><i>Nanotechnologist</i><br/>R7"])
+    end
+    subgraph MED_SHIFT_1["Medical Bay · Shift Beta"]
+        direction TB
+        MED_SC_1005(["Dr. Luca Icarus<br/><i>Neuroscientist</i><br/>R9"])
+        MED_SC_1008(["Dr. Ethan Harker<br/><i>Quantum Physicist</i><br/>R6"])
+        MED_SC_1001(["Dr. Elara T'Von<br/><i>Xenobiologist</i><br/>R7"])
+        MED_SC_1010(["Dr. Karra Thorne<br/><i>Bioengineer</i><br/>R6"])
+    end
+    subgraph MED_SHIFT_2["Medical Bay · Shift Gamma"]
+        direction TB
+        MED_SC_1004(["Dr. Samara Wren<br/><i>Medical Doctor</i><br/>R6"])
+        MED_SC_1002(["Prof. Alrik Voss<br/><i>Astrobiologist</i><br/>R8"])
+    end
+    MED -->|"Med Inventory"| MED_SC_1006
+    MED -->|"Marker Bio-Signature Study"| MED_SC_1007
+    MED -->|"Marker Bio-Signature Study"| MED_SC_1003
+    MED -->|"Sample Diagnostic"| MED_SC_1009
+    MED -->|"Necromorph Autopsy"| MED_SC_1005
+    MED -->|"Chief Med Consult"| MED_SC_1008
+    MED -->|"Necromorph Autopsy"| MED_SC_1001
+    MED -->|"Off-duty (Rec Room)"| MED_SC_1010
+    MED -->|"Chief Med Consult"| MED_SC_1004
+    MED -->|"Off-duty (Mess Hall)"| MED_SC_1002
 
     %% Legend (junior crew colour coding; officers labelled inline)
     subgraph LEGEND["Task Legend"]
@@ -264,39 +292,49 @@ flowchart LR
     style L_OFF fill:#141821,stroke:#5a6b78,color:#8ea2b0
     style L_CMD fill:#1a1428,stroke:#b47cff,color:#b47cff
 
-    linkStyle 0 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
+    style MINING_SHIFT_0 fill:#120e05,stroke:#8a5f1f,stroke-width:1px,color:#ffb03b
+    style MINING_SHIFT_1 fill:#120e05,stroke:#8a5f1f,stroke-width:1px,color:#ffb03b
+    style MINING_SHIFT_2 fill:#120e05,stroke:#8a5f1f,stroke-width:1px,color:#ffb03b
+    style ENG_SHIFT_0 fill:#05121a,stroke:#2a7581,stroke-width:1px,color:#4dd0e1
+    style ENG_SHIFT_1 fill:#05121a,stroke:#2a7581,stroke-width:1px,color:#4dd0e1
+    style ENG_SHIFT_2 fill:#05121a,stroke:#2a7581,stroke-width:1px,color:#4dd0e1
+    style MED_SHIFT_0 fill:#14060a,stroke:#7a1521,stroke-width:1px,color:#c8102e
+    style MED_SHIFT_1 fill:#14060a,stroke:#7a1521,stroke-width:1px,color:#c8102e
+    style MED_SHIFT_2 fill:#14060a,stroke:#7a1521,stroke-width:1px,color:#c8102e
+
+    linkStyle 0 stroke:#ffb03b,stroke-width:2px
     linkStyle 1 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 2 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 2 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
     linkStyle 3 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 4 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 4 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
     linkStyle 5 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 6 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 6 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
     linkStyle 7 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
     linkStyle 8 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
     linkStyle 9 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 10 stroke:#4dd0e1,stroke-width:2px
+    linkStyle 10 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
     linkStyle 11 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
     linkStyle 12 stroke:#4dd0e1,stroke-width:2px
     linkStyle 13 stroke:#4dd0e1,stroke-width:2px
-    linkStyle 14 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 15 stroke:#4dd0e1,stroke-width:2px
-    linkStyle 16 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 17 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
-    linkStyle 18 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 19 stroke:#4dd0e1,stroke-width:2px
-    linkStyle 20 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 14 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
+    linkStyle 15 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 16 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
+    linkStyle 17 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 18 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
+    linkStyle 19 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 20 stroke:#c8102e,stroke-width:2px
     linkStyle 21 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
     linkStyle 22 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 23 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
+    linkStyle 23 stroke:#c8102e,stroke-width:2px
     linkStyle 24 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
     linkStyle 25 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 26 stroke:#c8102e,stroke-width:2px
-    linkStyle 27 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
-    linkStyle 28 stroke:#c8102e,stroke-width:2px
-    linkStyle 29 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 26 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 27 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
+    linkStyle 28 stroke:#b47cff,stroke-width:2.5px,stroke-dasharray:6 3
+    linkStyle 29 stroke:#5a6b78,stroke-width:1.5px,stroke-dasharray:4 4
 ```
 
-_Snapshot generated 2026-07-15T11:39:06.741Z. Live version:
+_Snapshot generated 2026-07-15T15:22:43.773Z. Live version:
 `GET /api/rotations/mermaid`._
 
 <!-- ROTATION-SNAPSHOT:END -->

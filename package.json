@@ -20,7 +20,7 @@
         "watch-ts": "tsc --watch --project tsconfig.build.json",
         "watch-scss": "sass --watch CEC/styles/styles.scss:CEC/styles/styles.css",
         "test": "jest",
-        "gen:rotation": "ts-node --transpile-only scripts/gen-rotation-snapshot.ts",
+        "gen:rotation": "ts-node --transpile-only -P scripts/tsconfig.json scripts/gen-rotation-snapshot.ts",
         "lint": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
         "lint:check": "eslint '**/*.{js,jsx,ts,tsx}'",
         "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,html,css,scss,json,md}'",
