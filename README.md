@@ -10,24 +10,24 @@ every N hours.
 
 ## Table of contents
 
--   [Stack](#stack)
--   [Quick start](#quick-start)
--   [API surface](#api-surface)
--   [Architecture](#architecture)
--   [Entity model](#entity-model)
--   [Live crew rotation](#live-crew-rotation)
--   [Frontend](#frontend)
--   [Roadmap](#roadmap)
+- [Stack](#stack)
+- [Quick start](#quick-start)
+- [API surface](#api-surface)
+- [Architecture](#architecture)
+- [Entity model](#entity-model)
+- [Live crew rotation](#live-crew-rotation)
+- [Frontend](#frontend)
+- [Roadmap](#roadmap)
 
 ## Stack
 
--   **Backend:** Node.js, Express 4, Mongoose 8, TypeScript 5.
--   **Frontend:** React 18, React Router 6, TanStack Query 5, mermaid, Tailwind
+- **Backend:** Node.js, Express 4, Mongoose 8, TypeScript 5.
+- **Frontend:** React 18, React Router 6, TanStack Query 5, mermaid, Tailwind
     CSS 4 (in progress), Chakra Petch / Share Tech Mono / Orbitron typography.
--   **Data:** MongoDB Atlas (`CEC` database).
--   **Caching:** three layers — TanStack Query on the client, `Cache-Control`
+- **Data:** MongoDB Atlas (`CEC` database).
+- **Caching:** three layers — TanStack Query on the client, `Cache-Control`
     headers over HTTP, `lru-cache` in-memory on the server.
--   **Tooling:** webpack 5 dev server with `/api` proxy, Sass, PostCSS, Jest,
+- **Tooling:** webpack 5 dev server with `/api` proxy, Sass, PostCSS, Jest,
     ESLint, Prettier, Swagger UI (`/api/docs`).
 
 ## Quick start
@@ -40,10 +40,10 @@ npm run deck           # compile + backend + frontend + watchers
 
 Then open:
 
--   UI — <http://localhost:5376>
--   API root — <http://localhost:3842/api>
--   Swagger — <http://localhost:3842/api/docs>
--   Health — <http://localhost:3842/api/health>
+- UI — <http://localhost:5376>
+- API root — <http://localhost:3842/api>
+- Swagger — <http://localhost:3842/api/docs>
+- Health — <http://localhost:3842/api/health>
 
 ## API surface
 
@@ -104,6 +104,109 @@ flowchart TB
     end
 ```
 
+``` -
+.
+├── babel.config.json
+├── CEC
+│   ├── ASCII_BG.tsx
+│   ├── Hub.tsx
+│   ├── lib
+│   │   ├── api.ts
+│   │   └── queryClient.ts
+│   ├── public
+│   │   └── index.html
+│   ├── ships
+│   │   └── USG_Ishimura
+│   │       ├── bridge
+│   │       │   ├── pipe
+│   │       │   │   └── pipe.ts
+│   │       │   ├── routes
+│   │       │   │   ├── docs.route.ts
+│   │       │   │   ├── engineers.route.ts
+│   │       │   │   ├── health.route.ts
+│   │       │   │   ├── index.routes.ts
+│   │       │   │   ├── miners.route.ts
+│   │       │   │   ├── rotations.route.ts
+│   │       │   │   └── scientists.route.ts
+│   │       │   ├── server
+│   │       │   │   └── server.ts
+│   │       │   └── utils
+│   │       │       ├── cache.ts
+│   │       │       ├── errorEnvelope.ts
+│   │       │       ├── mermaidGraph.ts
+│   │       │       └── pagination.ts
+│   │       ├── crew
+│   │       │   ├── CEC.interface.ts
+│   │       │   ├── CEC.schema.ts
+│   │       │   ├── components
+│   │       │   │   ├── CrewComponent.jsx
+│   │       │   │   ├── CrosshairCursor.tsx
+│   │       │   │   ├── Engineers.jsx
+│   │       │   │   ├── Miners.jsx
+│   │       │   │   ├── RotationGraph.tsx
+│   │       │   │   ├── Scientists.jsx
+│   │       │   │   └── ui
+│   │       │   │       ├── CrewSkeleton.tsx
+│   │       │   │       └── ErrorState.tsx
+│   │       │   ├── controllers
+│   │       │   │   ├── engineer.controller.ts
+│   │       │   │   ├── miner.controller.ts
+│   │       │   │   └── scientist.controller.ts
+│   │       │   ├── crew.helper.ts
+│   │       │   ├── hooks
+│   │       │   │   └── useCrew.ts
+│   │       │   ├── models
+│   │       │   │   ├── engineer.model.ts
+│   │       │   │   ├── miner.model.ts
+│   │       │   │   └── scientist.model.ts
+│   │       │   └── scripts
+│   │       │       ├── fetchers
+│   │       │       │   ├── fetchEngineers.js
+│   │       │       │   ├── fetchMiners.js
+│   │       │       │   └── fetchScientists.js
+│   │       │       └── helpers
+│   │       │           ├── cert_eq.js
+│   │       │           └── sorters.js
+│   │       └── IshimuraDB.ts
+│   ├── src
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   ├── reportWebVitals.js
+│   │   └── setupTests.js
+│   └── styles
+│       ├── global.styles.css
+│       ├── styles.css
+│       ├── styles.css.map
+│       ├── styles.scss
+│       └── tailwind.css
+├── CEC.swagger.yaml
+├── CLAUDE.md
+├── eslint.config.js
+├── Ishimura_crew_rotation.mmd
+├── jest.config.js
+├── nodemon.json
+├── package.json
+├── package-lock.json
+├── postcss.config.js
+├── README.md
+├── ROADMAP.md
+├── scripts
+│   ├── gen-rotation-snapshot.ts
+│   └── tsconfig.json
+├── tests
+│   └── utils
+│       ├── cache.test.ts
+│       ├── errorEnvelope.test.ts
+│       ├── mermaidGraph.test.ts
+│       └── pagination.test.ts
+├── tree.txt
+├── tsconfig.build.json
+├── tsconfig.json
+└── webpack.config.js
+
+25 directories, 73 files
+```
+
 ## Entity model
 
 ```mermaid
@@ -149,12 +252,12 @@ methods (`isOfficer()`, `isActive()`, `lastCompletedMission()`,
 Every `slotHours` (default 4 h) the API deterministically assigns each crew
 member to a task from a canonical Dead Space task pool:
 
--   Junior crew (`rank < 4`) get a routine task; edge colour tells you which
+- Junior crew (`rank < 4`) get a routine task; edge colour tells you which
     bucket they landed in (mining, engineering, medical, or off-duty).
--   Officers (`rank ≥ 4`) get their task written **inline on the edge**, and are
+- Officers (`rank ≥ 4`) get their task written **inline on the edge**, and are
     pushed toward non-routine assignments 60 % of the time (autopsy command,
     reactor ops, foreman directive, and so on).
--   Inactive crew are always shown as off-duty.
+- Inactive crew are always shown as off-duty.
 
 The graph below is generated by
 [`scripts/gen-rotation-snapshot.ts`](scripts/gen-rotation-snapshot.ts) and
@@ -341,22 +444,22 @@ _Snapshot generated 2026-07-15T15:22:43.773Z. Live version:
 
 ## Frontend
 
--   Route-level code splitting via `React.lazy` + `Suspense`.
--   Data fetching through `useCrew(role, {page, limit})` — TanStack Query
+- Route-level code splitting via `React.lazy` + `Suspense`.
+- Data fetching through `useCrew(role, {page, limit})` — TanStack Query
     handles caching, retries, and background revalidation.
--   HUD-styled UI: scanlines, vignette, corner-cut clip-paths, RIG cyan glow.
--   Custom `CrosshairCursor` replaces the system pointer.
--   Loading skeletons and typed `ErrorState` component for every crew route.
+- HUD-styled UI: scanlines, vignette, corner-cut clip-paths, RIG cyan glow.
+- Custom `CrosshairCursor` replaces the system pointer.
+- Loading skeletons and typed `ErrorState` component for every crew route.
 
 ## Roadmap
 
 See [ROADMAP.md](ROADMAP.md) for the full plan. Current milestones done:
 
--   **M1** — foundation cleanup (error envelope, health, Swagger UI, TS 5,
+- **M1** — foundation cleanup (error envelope, health, Swagger UI, TS 5,
     `jsx: react-jsx`).
--   **M2** — frontend UX pass (TanStack Query, skeletons, error UI, lazy routes,
+- **M2** — frontend UX pass (TanStack Query, skeletons, error UI, lazy routes,
     pagination, cache).
--   **Rotation** — live rotation endpoint + roulette + mermaid renderer.
+- **Rotation** — live rotation endpoint + roulette + mermaid renderer.
 
 Next up: Vite migration, domain expansion (ships, necromorphs, weapons,
 markers), auth (JWT + roles).

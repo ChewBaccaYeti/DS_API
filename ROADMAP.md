@@ -10,72 +10,72 @@ Living document. Ticks off as milestones land. Sections are ordered by priority.
 
 **Strengths**
 
--   Helmet + rate-limit + compression + CORS wired in `pipe.js`.
--   Clean route layering (`index.routes.ts` → per-resource routers → controllers
+- Helmet + rate-limit + compression + CORS wired in `pipe.js`.
+- Clean route layering (`index.routes.ts` → per-resource routers → controllers
     → models).
--   Env validation on startup (`server.js:28`) — fails fast on missing Mongo
+- Env validation on startup (`server.js:28`) — fails fast on missing Mongo
     creds.
 
 **Weaknesses**
 
--   **No input validation.** All endpoints are `GET`. When POST/PUT lands,
+- **No input validation.** All endpoints are `GET`. When POST/PUT lands,
     Mongoose alone is not enough. Add Zod schemas at the route layer.
--   **No authentication.** Anyone can hit `/api/*`. Needs JWT + role-based
+- **No authentication.** Anyone can hit `/api/*`. Needs JWT + role-based
     access (CEC clearance levels).
--   **No pagination.** `Miner.find()` returns everything. At 10k crew members
+- **No pagination.** `Miner.find()` returns everything. At 10k crew members
     the UI dies.
--   **Inconsistent error shape.** `miner.controller.ts:13` sends
+- **Inconsistent error shape.** `miner.controller.ts:13` sends
     `res.status(500).send('Error...')` — plain text, contradicts the Swagger
     spec (JSON). Wrap all errors in a common envelope.
--   **`logAllData()` on boot.** Runs a full fetch of miners/engineers/scientists
+- **`logAllData()` on boot.** Runs a full fetch of miners/engineers/scientists
     on every server start. Kills startup time when DB grows. Move behind a
     `/api/debug/dump` route or drop it.
--   **Rate limit is global.** 100 req / 15 min for the whole API. Tier by route
+- **Rate limit is global.** 100 req / 15 min for the whole API. Tier by route
     (public reads: 200/min, mutations: 20/min).
--   **No health check.** Kubernetes / uptime monitors have no `/api/health` to
+- **No health check.** Kubernetes / uptime monitors have no `/api/health` to
     probe.
--   **Swagger file exists but is not served.** Ship `swagger-ui-express` at
+- **Swagger file exists but is not served.** Ship `swagger-ui-express` at
     `/api/docs`.
--   **`archive/` compile step doubles the pipeline.** Backend runs `.js` from
+- **`archive/` compile step doubles the pipeline.** Backend runs `.js` from
     `archive/`, frontend also passes through webpack. Consolidate.
--   **Console.log + Winston mixed.** Pick one. Winston with `pretty` transport
+- **Console.log + Winston mixed.** Pick one. Winston with `pretty` transport
     in dev, JSON in prod.
--   **Schema drift.** `lastMission` is an array in Mongoose but a single object
+- **Schema drift.** `lastMission` is an array in Mongoose but a single object
     in Swagger. Pick one and align.
 
 ### Frontend (`CEC/**` React)
 
 **Weaknesses**
 
--   **No error UI.** If fetch fails, users see the "Loading..." string forever.
--   **No skeleton loader.** Same "Loading..." string across all three routes.
--   **No search / filter / pagination.** Once crew count grows, list becomes
+- **No error UI.** If fetch fails, users see the "Loading..." string forever.
+- **No skeleton loader.** Same "Loading..." string across all three routes.
+- **No search / filter / pagination.** Once crew count grows, list becomes
     unusable.
--   **Manual state.** `useState` + `useEffect` fetch. Replace with **TanStack
+- **Manual state.** `useState` + `useEffect` fetch. Replace with **TanStack
     Query** — caching, retries, background revalidation for free.
--   **Sort mutates local state.** After sorting, original order is lost until
+- **Sort mutates local state.** After sorting, original order is lost until
     refetch. Keep a sorted view over immutable data.
--   **`ASCII_BG` is expensive.** Canvas repaints every frame at grid resolution.
+- **`ASCII_BG` is expensive.** Canvas repaints every frame at grid resolution.
     On 4K + 144Hz it burns CPU. Alternatives listed in Part III.
--   **No route-level code splitting.** All three crew screens ship in the
+- **No route-level code splitting.** All three crew screens ship in the
     initial bundle. Use `React.lazy` + Suspense.
--   **No accessibility pass.** Missing `aria-*`, focus trap on modals (when they
+- **No accessibility pass.** Missing `aria-*`, focus trap on modals (when they
     arrive), keyboard navigation on cards.
--   **Client-side sanitize via DOMPurify.** Fine, but data comes from our own DB
+- **Client-side sanitize via DOMPurify.** Fine, but data comes from our own DB
     — sanitize at ingest, not at render. Faster.
 
 ### Architecture / tooling
 
--   **`react-scripts` is deprecated.** Migrate to **Vite** — faster HMR,
+- **`react-scripts` is deprecated.** Migrate to **Vite** — faster HMR,
     first-class TS/ESM, ~1/10 the config.
--   **TypeScript 4.9** on the frontend. Bump to 5.x, flip `"jsx": "react"` →
+- **TypeScript 4.9** on the frontend. Bump to 5.x, flip `"jsx": "react"` →
     `"react-jsx"`, drop the `import React` boilerplate.
--   **Two tsconfigs implied but only one exists.** Split into
+- **Two tsconfigs implied but only one exists.** Split into
     `tsconfig.frontend.json` and `tsconfig.backend.json` — different targets,
     different libs.
--   **No CI.** GitHub Actions badge in README points to workflows — verify they
+- **No CI.** GitHub Actions badge in README points to workflows — verify they
     run. Add: lint, typecheck, unit test, build.
--   **No pre-commit hooks.** Add Husky + lint-staged to run Prettier/ESLint on
+- **No pre-commit hooks.** Add Husky + lint-staged to run Prettier/ESLint on
     changed files.
 
 ---
@@ -167,28 +167,28 @@ GET    /api/docs                      swagger-ui
 
 Optional (later):
 
--   **GraphQL** layer over the same models — clients want
+- **GraphQL** layer over the same models — clients want
     `crew → ship → incidents` in one round-trip. Apollo Server on top of
     Mongoose.
--   **WebSocket** channel `/ws/rig-telemetry` — streams live "crew status"
+- **WebSocket** channel `/ws/rig-telemetry` — streams live "crew status"
     updates every N seconds (health, oxygen, location on ship deck). Faked from
     DB for atmosphere.
--   **Server-sent events** for incident feed.
+- **Server-sent events** for incident feed.
 
 ### 2.3 Data ingest
 
--   Seed script `npm run seed` that inserts canonical crew, ships, necromorphs,
+- Seed script `npm run seed` that inserts canonical crew, ships, necromorphs,
     weapons from JSON fixtures in `CEC/seeds/`.
--   Fixtures under version control — treat lore as data, not code.
+- Fixtures under version control — treat lore as data, not code.
 
 ### 2.4 Auth model
 
--   JWT with roles: `guest`, `crew`, `officer`, `admin`.
--   Public reads (necromorph list, weapons, timeline) — no auth.
--   Crew reads (own records) — `crew`.
--   Mutations — `officer`.
--   Destructive ops — `admin`.
--   Rotate secrets via AWS Secrets Manager in prod.
+- JWT with roles: `guest`, `crew`, `officer`, `admin`.
+- Public reads (necromorph list, weapons, timeline) — no auth.
+- Crew reads (own records) — `crew`.
+- Mutations — `officer`.
+- Destructive ops — `admin`.
+- Rotate secrets via AWS Secrets Manager in prod.
 
 ---
 
@@ -394,17 +394,17 @@ DS_API/
 
 Notes on the target layout:
 
--   No more `CEC/archive/**`. Vite builds the frontend directly from `src/`.
+- No more `CEC/archive/**`. Vite builds the frontend directly from `src/`.
     Backend runs from TypeScript via `tsx` (no manual compile step, watch is
     instant).
--   `CEC/` prefix goes away entirely. `CEC` becomes a namespace in code
+- `CEC/` prefix goes away entirely. `CEC` becomes a namespace in code
     (`import { crewRoutes } from 'server/routes/crew.route'`), not a folder
     ancestor.
--   `USG_Ishimura` becomes data, not a directory. The API can serve multiple
+- `USG_Ishimura` becomes data, not a directory. The API can serve multiple
     ships.
--   One controller per resource, one route file per resource. No more
+- One controller per resource, one route file per resource. No more
     per-crew-type routes.
--   Zod schemas live once, imported by both server and client. Response types
+- Zod schemas live once, imported by both server and client. Response types
     are auto-inferred.
 
 ---
@@ -417,139 +417,139 @@ Bite-sized. Each one shippable independently. `✓` = done, `~` = in progress.
 (M3–M8). M2 is 90 % — only the per-component Tailwind migration is still
 pending; the framework is wired end-to-end.
 
--   **M1 — Foundation cleanup** ✓
+- **M1 — Foundation cleanup** ✓
 
-    -   ✓ Unified error envelope (`bridge/utils/errorEnvelope.ts`) + `ApiError`
+  - ✓ Unified error envelope (`bridge/utils/errorEnvelope.ts`) + `ApiError`
         class
-    -   ✓ `GET /api/health` — Mongo readiness + uptime
-    -   ✓ Swagger UI mounted at `/api/docs`; raw spec at `/api/openapi.json`
-    -   ✓ `logAllData()` removed from boot — server starts instantly
-    -   ✓ TypeScript bumped 4.9 → 5.x; `"jsx": "react-jsx"` (drop `import React`
+  - ✓ `GET /api/health` — Mongo readiness + uptime
+  - ✓ Swagger UI mounted at `/api/docs`; raw spec at `/api/openapi.json`
+  - ✓ `logAllData()` removed from boot — server starts instantly
+  - ✓ TypeScript bumped 4.9 → 5.x; `"jsx": "react-jsx"` (drop `import React`
         boilerplate)
-    -   ✓ `react-scripts` removed (conflicted with TS 5)
+  - ✓ `react-scripts` removed (conflicted with TS 5)
 
--   **M2 — Frontend UX pass** ~ (Tailwind migration pending)
+- **M2 — Frontend UX pass** ~ (Tailwind migration pending)
 
-    -   ✓ `CrewSkeleton` + `ErrorState` HUD components with faction colours
-    -   ✓ TanStack Query 5 wired via `CEC/lib/queryClient.ts`, hooks in
+  - ✓ `CrewSkeleton` + `ErrorState` HUD components with faction colours
+  - ✓ TanStack Query 5 wired via `CEC/lib/queryClient.ts`, hooks in
         `crew/hooks/useCrew.ts`
-    -   ✓ Route-level code splitting: `React.lazy` + `Suspense` for
+  - ✓ Route-level code splitting: `React.lazy` + `Suspense` for
         Miners/Engineers/Scientists/RotationGraph
-    -   ✓ Pagination on all crew endpoints: `?page=1&limit=50` →
+  - ✓ Pagination on all crew endpoints: `?page=1&limit=50` →
         `{items, page, limit, total}`
-    -   ✓ Three-layer cache: TanStack Query (client) + `Cache-Control` (HTTP) +
+  - ✓ Three-layer cache: TanStack Query (client) + `Cache-Control` (HTTP) +
         `lru-cache` (server)
-    -   ⋯ Tailwind CSS 4 wired end-to-end; per-component migration still ahead
+  - ⋯ Tailwind CSS 4 wired end-to-end; per-component migration still ahead
 
--   **M2.5 — Domain model + OOP hardening** ✓
+- **M2.5 — Domain model + OOP hardening** ✓
 
-    -   ✓ `CEC.interface.ts` split into value objects (`Role`, `Experience`,
+  - ✓ `CEC.interface.ts` split into value objects (`Role`, `Experience`,
         `Certification`, `Equipment`, `Mission`) and aggregate `CrewMember`
-    -   ✓ All fields `readonly`; single-argument `CrewPrototype` constructor
+  - ✓ All fields `readonly`; single-argument `CrewPrototype` constructor
         with typed business methods
-    -   ✓ `Model<CrewMember>` in every model file (no more `any`)
-    -   ✓ `crew.helper.ts` uses `HydratedDocument<CrewMember>` and returns typed
+  - ✓ `Model<CrewMember>` in every model file (no more `any`)
+  - ✓ `crew.helper.ts` uses `HydratedDocument<CrewMember>` and returns typed
         `CrewPrototype[]`
-    -   ✓ Legacy `IshimuraDB.ts` cleaned up: error envelope, typed handlers, env
+  - ✓ Legacy `IshimuraDB.ts` cleaned up: error envelope, typed handlers, env
         guard
 
--   **M2.6 — Live crew rotation** ✓
+- **M2.6 — Live crew rotation** ✓
 
-    -   ✓ Deterministic slot-based roulette (`bridge/utils/mermaidGraph.ts`) —
+  - ✓ Deterministic slot-based roulette (`bridge/utils/mermaidGraph.ts`) —
         same slot = same assignments across clients
-    -   ✓ Task pools: routine per deck + officer non-routine (60 % bias for rank
+  - ✓ Task pools: routine per deck + officer non-routine (60 % bias for rank
         ≥ 4)
-    -   ✓ Off-duty edges for inactive crew and 20 % lottery for junior crew
-    -   ✓ Mermaid theme, per-edge `linkStyle` colouring, in-graph legend
-    -   ✓ Endpoints: `/api/rotations`, `/api/rotations/mermaid`,
+  - ✓ Off-duty edges for inactive crew and 20 % lottery for junior crew
+  - ✓ Mermaid theme, per-edge `linkStyle` colouring, in-graph legend
+  - ✓ Endpoints: `/api/rotations`, `/api/rotations/mermaid`,
         `/api/rotations/slot`
-    -   ✓ Frontend `RotationGraph.tsx` — slot picker, countdown to next
+  - ✓ Frontend `RotationGraph.tsx` — slot picker, countdown to next
         rotation, responsive SVG (100 % width)
-    -   ✓ Snapshot script `npm run gen:rotation` — writes
+  - ✓ Snapshot script `npm run gen:rotation` — writes
         `Ishimura_crew_rotation.mmd` and injects mermaid block into README
         between markers
 
--   **M2.7 — CI/CD lint hardening** ✓
+- **M2.7 — CI/CD lint hardening** ✓
 
-    -   ✓ Root cause of the failing `deploy.yml` badge: `globals@14` (transitive
+  - ✓ Root cause of the failing `deploy.yml` badge: `globals@14` (transitive
         via `eslint@9.14`) ships an entry `AudioWorkletGlobalScope` with a
         trailing space, and ESLint 9.14 rejects it up front. Pinned
         `globals@^15.15.0` as a direct devDependency so the whitespace-fixed
         list is used.
-    -   ✓ `eslint.config.js` restructured into three flat blocks: 1. Backend
+  - ✓ `eslint.config.js` restructured into three flat blocks: 1. Backend
         `.ts` — typed lint via `tsconfig.json`. 2. Frontend `.tsx / .jsx / .js`
         and `ASCII_BG.tsx` — parser-only (babel transforms them at build time;
         no TS project required). 3. Node scripts (`scripts/**`, `*.config.js`) —
         node-only globals, React rules disabled, `no-console` off.
-    -   ✓ Global ignore list added for `CEC/archive/**`, `node_modules/**`,
+  - ✓ Global ignore list added for `CEC/archive/**`, `node_modules/**`,
         compiled `.css` output — prevents lint from crawling build artefacts.
-    -   ✓ `tsconfig.json` `include` narrowed to backend `.ts` only; `.tsx` stays
+  - ✓ `tsconfig.json` `include` narrowed to backend `.ts` only; `.tsx` stays
         outside tsc, which matches how webpack + babel handle the frontend.
-    -   ✓ Legacy `eslintConfig` block (with `react-app` / `react-app/jest`
+  - ✓ Legacy `eslintConfig` block (with `react-app` / `react-app/jest`
         presets) removed from `package.json` — it was dead weight left over from
         CRA and shadowed the flat config in some editors.
-    -   ✓ Real lint errors fixed as a side-effect: `consistent-return` in
+  - ✓ Real lint errors fixed as a side-effect: `consistent-return` in
         `bridge/utils/cache.ts` and `RotationGraph.tsx` (explicit
         `return     undefined` in early exits), plus `no-undef: 'React'` in
         `Hub.tsx` (switched to named `type FC` import — `React.FC` is not in
         scope with `jsx: react-jsx`).
-    -   ✓ `npm run lint:check` now exits `0` locally (12 warnings remain, all
+  - ✓ `npm run lint:check` now exits `0` locally (12 warnings remain, all
         `no-console`; CI treats them as non-fatal).
 
--   **M2.8 — Test harness + pre-commit + code owners** ✓
+- **M2.8 — Test harness + pre-commit + code owners** ✓
 
-    -   ✓ Jest wired via `ts-jest`; new `jest.config.js` targets `tests/**` with
+  - ✓ Jest wired via `ts-jest`; new `jest.config.js` targets `tests/**` with
         an inline tsconfig (CommonJS + `jsx: react-jsx`) so backend and frontend
         utils are testable without touching the build config.
-    -   ✓ 25 smoke tests across four suites covering the big pure processes:
-        -   `errorEnvelope.test.ts` — envelope shape + prod message masking +
+  - ✓ 25 smoke tests across four suites covering the big pure processes:
+    - `errorEnvelope.test.ts` — envelope shape + prod message masking +
             4xx passthrough.
-        -   `pagination.test.ts` — default/parse/clamp behaviour of
+    - `pagination.test.ts` — default/parse/clamp behaviour of
             `?page&limit`.
-        -   `cache.test.ts` — LRU middleware MISS→HIT transition + prefix
+    - `cache.test.ts` — LRU middleware MISS→HIT transition + prefix
             invalidation.
-        -   `mermaidGraph.test.ts` — slot determinism, inactive → off-duty,
+    - `mermaidGraph.test.ts` — slot determinism, inactive → off-duty,
             officer bias distribution, chief label selection.
-    -   ✓ Husky pre-commit hook (`.husky/pre-commit`) runs `lint-staged`
+  - ✓ Husky pre-commit hook (`.husky/pre-commit`) runs `lint-staged`
         (auto-fix + prettier on staged files) then `npm test` — commit blocks on
         any red.
-    -   ✓ `lint-staged` config in `package.json` — `.{js,jsx,ts,tsx}` go through
+  - ✓ `lint-staged` config in `package.json` — `.{js,jsx,ts,tsx}` go through
         `eslint --fix` + `prettier --write`; docs/config through prettier only.
-    -   ✓ `.prettierignore` added so prettier stops reformatting `CODEOWNERS`,
+  - ✓ `.prettierignore` added so prettier stops reformatting `CODEOWNERS`,
         `Ishimura_crew_rotation.mmd`, and other generated files.
-    -   ✓ `.github/CODEOWNERS` — every path in the repo requires review by
+  - ✓ `.github/CODEOWNERS` — every path in the repo requires review by
         `@ChewBaccaYeti` (default `*` line plus explicit ownership for
         `.github/`, `.husky/`, backend `bridge/`, package/tsconfig/webpack).
 
--   **M3 — Build tool migration**
+- **M3 — Build tool migration**
 
-    -   Vite replaces webpack + `react-scripts`
-    -   Directory flatten (`CEC/` → `src/` + `server/`)
-    -   Backend runs via `tsx watch` — no `archive/`
+  - Vite replaces webpack + `react-scripts`
+  - Directory flatten (`CEC/` → `src/` + `server/`)
+  - Backend runs via `tsx watch` — no `archive/`
 
--   **M4 — Domain expansion phase 1**
+- **M4 — Domain expansion phase 1**
 
-    -   Ships, Necromorphs, Weapons: models, routes, seeds
-    -   Cross-resource search endpoint
+  - Ships, Necromorphs, Weapons: models, routes, seeds
+  - Cross-resource search endpoint
 
--   **M5 — Domain expansion phase 2**
+- **M5 — Domain expansion phase 2**
 
-    -   RIGs, Markers, Locations, Incidents, Factions, Missions, Timeline
+  - RIGs, Markers, Locations, Incidents, Factions, Missions, Timeline
 
--   **M6 — Auth + hardening**
+- **M6 — Auth + hardening**
 
-    -   JWT + role middleware
-    -   Tiered rate limiting
-    -   Zod validation on all mutations
-    -   Test suite (Vitest + supertest + Playwright)
-    -   GitHub Actions CI
+  - JWT + role middleware
+  - Tiered rate limiting
+  - Zod validation on all mutations
+  - Test suite (Vitest + supertest + Playwright)
+  - GitHub Actions CI
 
--   **M7 — Background overhaul**
+- **M7 — Background overhaul**
 
-    -   r3f Ishimura wireframe + Marker glyph SVG overlay
-    -   Remove `ASCII_BG.tsx`
+  - r3f Ishimura wireframe + Marker glyph SVG overlay
+  - Remove `ASCII_BG.tsx`
 
--   **M8 — Realtime (optional)**
-    -   WebSocket RIG telemetry
-    -   SSE incident feed
-    -   GraphQL gateway
+- **M8 — Realtime (optional)**
+  - WebSocket RIG telemetry
+  - SSE incident feed
+  - GraphQL gateway
