@@ -97,7 +97,7 @@ mongoose
         protoScientists();
         console.log('[RIG] Legacy Aegis connection successful.');
         app.listen(LEGACY_PORT, () => {
-            console.log(
+            console.warn(
                 `[RIG] Legacy server at http://localhost:${LEGACY_PORT}`,
             );
         });

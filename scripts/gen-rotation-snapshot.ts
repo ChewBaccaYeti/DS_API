@@ -24,6 +24,17 @@ import {
     buildRotationMermaid,
     type CrewLike,
 } from '../CEC/ships/USG_Ishimura/bridge/utils/mermaidGraph';
+import { createLogger } from 'winston';
+import winstonDevConsole from '@epegzz/winston-dev-console';
+
+let log = createLogger({ level: 'silly' });
+log = winstonDevConsole.init(log);
+log.add(
+    winstonDevConsole.transport({
+        showTimestamps: true,
+        addLineSeparation: true,
+    }),
+);
 
 const START = '<!-- ROTATION-SNAPSHOT:START -->';
 const END = '<!-- ROTATION-SNAPSHOT:END -->';
@@ -68,7 +79,7 @@ async function main() {
 
     const mmdOut = header + mermaid + '\n';
     await fs.writeFile(MMD_PATH, mmdOut, 'utf8');
-    console.log(`✓ wrote ${path.relative(ROOT, MMD_PATH)}`);
+    log.silly(`✓ wrote ${path.relative(ROOT, MMD_PATH)}`);
 
     const readme = await fs.readFile(README_PATH, 'utf8');
     const block =
@@ -78,7 +89,7 @@ async function main() {
         `_Snapshot generated ${new Date().toISOString()}. Live version: \`GET /api/rotations/mermaid\`._\n`;
 
     if (!readme.includes(START) || !readme.includes(END)) {
-        console.warn(
+        log.warn(
             `⚠ README markers not found (${START} / ${END}); skipping README update.`,
         );
     } else {
@@ -89,13 +100,13 @@ async function main() {
         const after = readme.substring(readme.indexOf(END));
         const patched = `${before}\n\n${block}\n${after}`;
         await fs.writeFile(README_PATH, patched, 'utf8');
-        console.log(`✓ patched ${path.relative(ROOT, README_PATH)}`);
+        log.verbose(`✓ patched ${path.relative(ROOT, README_PATH)}`);
     }
 
     await mongoose.disconnect();
 }
 
 main().catch(err => {
-    console.error('gen-rotation-snapshot failed:', err);
+    log.error('gen-rotation-snapshot failed:', err);
     mongoose.disconnect().finally(() => process.exit(1));
 });

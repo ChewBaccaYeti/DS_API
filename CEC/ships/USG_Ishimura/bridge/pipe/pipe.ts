@@ -5,6 +5,17 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import router from '../routes/index.routes';
 import { errorHandler, notFoundHandler } from '../utils/errorEnvelope';
+import { createLogger } from 'winston';
+import winstonDevConsole from '@epegzz/winston-dev-console';
+
+let log = createLogger({ level: 'silly' });
+log = winstonDevConsole.init(log);
+log.add(
+    winstonDevConsole.transport({
+        showTimestamps: true,
+        addLineSeparation: true,
+    }),
+);
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -67,8 +78,8 @@ export default function pipe() {
         .use(express.json({ limit: '10mb' }))
         .use(express.urlencoded({ extended: true, limit: '10mb' }))
         .use((req, _res, next) => {
-            console.log(
-                `📡 ${req.method} ${req.path} - ${req.ip} at ${new Date().toISOString()}`,
+            log.verbose(
+                `📡 [${req.method} ${req.path} - ${req.ip} at ${new Date().toISOString()}]`,
             );
             next();
         })

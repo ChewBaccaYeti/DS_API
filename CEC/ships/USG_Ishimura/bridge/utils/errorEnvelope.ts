@@ -1,4 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
+import { createLogger } from 'winston';
+import winstonDevConsole from '@epegzz/winston-dev-console';
+
+let log = createLogger({ level: 'silly' });
+log = winstonDevConsole.init(log);
+log.add(
+    winstonDevConsole.transport({
+        showTimestamps: true,
+        addLineSeparation: true,
+    }),
+);
 
 export class ApiError extends Error {
     status: number;
@@ -51,7 +62,7 @@ export function errorHandler(
 ): void {
     const envelope = buildErrorEnvelope(err, req);
     if (envelope.status >= 500) {
-        console.error('🚨 USG Ishimura Error:', err);
+        log.error('🚨 USG Ishimura Error:', err);
     }
     res.status(envelope.status).json(envelope);
 }
@@ -60,7 +71,7 @@ export function notFoundHandler(req: Request, res: Response): void {
     res.status(404).json({
         error: {
             code: 'ROUTE_NOT_FOUND',
-            message: `The requested endpoint ${req.originalUrl} does not exist on USG Ishimura systems.`,
+            message: `[The requested endpoint ${req.originalUrl} does not exist on USG Ishimura systems.]`,
         },
         endpoint: req.originalUrl,
         status: 404,

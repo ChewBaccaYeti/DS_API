@@ -9,7 +9,7 @@ let log = createLogger({ level: 'silly' });
 log = winstonDevConsole.init(log);
 log.add(
     winstonDevConsole.transport({
-        showTimestamps: false,
+        showTimestamps: true,
         addLineSeparation: true,
     }),
 );
@@ -22,7 +22,7 @@ const port = process.env.APP_PORT;
 
 if (!username || !password || !connection || !database) {
     throw new Error(
-        'One or more MongoDB connection environment variables are undefined',
+        '!!!One or more MongoDB connection environment variables are undefined!!!',
     );
 }
 
@@ -31,14 +31,14 @@ mongoose
         `mongodb+srv://${username}:${password}@${connection}.fm1e1.mongodb.net/${database}?retryWrites=true&w=majority&appName=${connection}`,
     )
     .then(() => {
-        log.info('MongoDB connection successful.');
+        log.info('[MongoDB connection successful.]');
 
         const app = pipe();
 
         app.listen(port, () => {
-            log.info(`Server running at http://localhost:${port}`);
-            log.info(`API docs at http://localhost:${port}/api/docs`);
-            log.info(`Health at http://localhost:${port}/api/health`);
+            log.verbose(`[Server running at http://localhost:${port}]`);
+            log.info(`[API docs at http://localhost:${port}/api/docs]`);
+            log.info(`[Health at http://localhost:${port}/api/health]`);
         });
     })
     .catch((error: Error) => {

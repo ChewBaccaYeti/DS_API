@@ -40,7 +40,7 @@ export async function apiGet<T>(
     const contentType = res.headers.get('content-type') ?? '';
     if (!contentType.includes('application/json')) {
         throw new Error(
-            `Non-JSON response from ${url.pathname}: ${res.status} ${res.statusText}`,
+            `[Non-JSON response from ${url.pathname}: ${res.status} ${res.statusText}]`,
         );
     }
     const body = await res.json();
