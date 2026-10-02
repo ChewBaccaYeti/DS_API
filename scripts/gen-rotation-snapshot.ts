@@ -24,17 +24,7 @@ import {
     buildRotationMermaid,
     type CrewLike,
 } from '../CEC/ships/USG_Ishimura/bridge/utils/mermaidGraph';
-import { createLogger } from 'winston';
-import winstonDevConsole from '@epegzz/winston-dev-console';
-
-let log = createLogger({ level: 'silly' });
-log = winstonDevConsole.init(log);
-log.add(
-    winstonDevConsole.transport({
-        showTimestamps: true,
-        addLineSeparation: true,
-    }),
-);
+import { log } from '../CEC/ships/USG_Ishimura/bridge/utils/log';
 
 const START = '<!-- ROTATION-SNAPSHOT:START -->';
 const END = '<!-- ROTATION-SNAPSHOT:END -->';

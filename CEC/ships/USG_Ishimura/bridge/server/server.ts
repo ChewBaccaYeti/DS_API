@@ -1,18 +1,8 @@
 require('dotenv').config({ path: '.env' });
 
-import { createLogger } from 'winston';
-import winstonDevConsole from '@epegzz/winston-dev-console';
 import mongoose from 'mongoose';
 import pipe from '../pipe/pipe';
-
-let log = createLogger({ level: 'silly' });
-log = winstonDevConsole.init(log);
-log.add(
-    winstonDevConsole.transport({
-        showTimestamps: true,
-        addLineSeparation: true,
-    }),
-);
+import { log } from '../utils/log';
 
 const username = process.env.MONGO_CEC_ADMIN;
 const password = process.env.MONGO_CEC_PASS;

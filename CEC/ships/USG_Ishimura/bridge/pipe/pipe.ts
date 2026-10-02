@@ -5,17 +5,7 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import router from '../routes/index.routes';
 import { errorHandler, notFoundHandler } from '../utils/errorEnvelope';
-import { createLogger } from 'winston';
-import winstonDevConsole from '@epegzz/winston-dev-console';
-
-let log = createLogger({ level: 'silly' });
-log = winstonDevConsole.init(log);
-log.add(
-    winstonDevConsole.transport({
-        showTimestamps: true,
-        addLineSeparation: true,
-    }),
-);
+import { log } from '../utils/log';
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
